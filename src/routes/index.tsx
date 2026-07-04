@@ -48,8 +48,14 @@ const fadeUp = {
 
 function Nav() {
   const links = ["Dual-Key Architecture", "GroundTruth", "Surety", "Threat Models"];
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
+      <motion.div
+        style={{ scaleX: progress }}
+        className="absolute top-0 left-0 right-0 h-0.5 origin-left bg-gradient-to-r from-emerald-500 to-indigo-500"
+      />
       <div className="mx-auto mt-4 max-w-7xl px-4">
         <div className="glass flex items-center justify-between rounded-2xl px-4 py-3 sm:px-6">
           <a href="#" className="flex items-center gap-2">
