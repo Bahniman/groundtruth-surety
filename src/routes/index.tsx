@@ -117,7 +117,7 @@ function Hero() {
           transition={{ ...fadeUp.transition, delay: 0.05 }}
           className="mx-auto mt-8 max-w-5xl text-4xl font-semibold tracking-tight sm:text-6xl md:text-7xl"
         >
-          <span className="bg-gradient-to-r from-emerald-400 via-white to-indigo-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-emerald-500 via-foreground to-indigo-500 bg-clip-text text-transparent">
             Money that moves at the speed of verified reality.
           </span>
         </motion.h1>
