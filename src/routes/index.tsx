@@ -143,7 +143,7 @@ function Hero() {
         >
           <a
             href="#architecture"
-            className="group inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all btn-press hover:scale-105 hover:shadow-[0_0_40px_oklch(from_var(--foreground)_l_c_h_/_0.25)]"
+            className="group btn-press inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background shadow-lg shadow-foreground/20 transition-all hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/30"
           >
             View System Architecture
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
