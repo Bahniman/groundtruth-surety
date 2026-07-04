@@ -554,6 +554,161 @@ function Footer() {
   );
 }
 
+function LiveDemos() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-20">
+      <motion.div {...fadeUp} className="mb-10 max-w-3xl">
+        <div className="text-sm uppercase tracking-[0.2em] text-emerald-400/80">
+          Live · try it
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          Sign a real work item. Watch the payout unlock.
+        </h2>
+        <p className="mt-4 max-w-2xl text-slate-400">
+          A PWD site engineer certifies an AI-prefilled Measurement Book entry
+          with an Ed25519 key. The certificate becomes a bank-financeable
+          receivable in the same session.
+        </p>
+      </motion.div>
+      <motion.div {...fadeUp}>
+        <DualKeyDemo />
+      </motion.div>
+    </section>
+  );
+}
+
+function SuretySection() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-20">
+      <motion.div {...fadeUp} className="mb-10 max-w-3xl">
+        <div className="text-sm uppercase tracking-[0.2em] text-indigo-400/80">
+          Surety · policy playground
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          Give the agent hands. Keep the permission slip.
+        </h2>
+        <p className="mt-4 max-w-2xl text-slate-400">
+          Adjust the spend cap and domain allowlist, then simulate an agent
+          calling <span className="font-mono text-white/70">payments.charge</span>.
+          The MCP proxy checks every call against the signed certificate.
+        </p>
+      </motion.div>
+      <motion.div {...fadeUp}>
+        <SuretyPlayground />
+      </motion.div>
+    </section>
+  );
+}
+
+function Verticals() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-20">
+      <motion.div {...fadeUp} className="mb-10 max-w-3xl">
+        <div className="text-sm uppercase tracking-[0.2em] text-emerald-400/80">
+          One primitive · applied everywhere
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          Verification is the last analog industry.
+        </h2>
+        <p className="mt-4 max-w-2xl text-slate-400">
+          Public works is the beachhead. Insurance, agri, trade, and carbon
+          reuse the same certificate primitive — trust and calibration compound
+          across verticals.
+        </p>
+      </motion.div>
+      <motion.div {...fadeUp}>
+        <VerticalsSwitcher />
+      </motion.div>
+    </section>
+  );
+}
+
+const roadmap = [
+  {
+    phase: "Prototype",
+    when: "Weeks",
+    color: "emerald",
+    items: [
+      "Field capture + AI-prefilled Measurement Book with dual-key certification on a real PWD work item",
+      "Certificate format + MCP proxy demo: an agent tries to overspend and is stopped by the signed limit",
+      "Map view of certified works across a division",
+    ],
+  },
+  {
+    phase: "Pilot",
+    when: "3–6 months",
+    color: "indigo",
+    items: [
+      "One state PWD division · works ₹15L to ₹5Cr · measurement-to-payment tracked 90 → 15 days",
+      "Three Surety design-partner teams running the proxy in production",
+      "Tamper-evident audit log in daily use across both stacks",
+    ],
+  },
+  {
+    phase: "Scale",
+    when: "12+ months",
+    color: "white",
+    items: [
+      "Bank partnership discounting certified receivables",
+      "Second GroundTruth vertical (insurance claims) pilot",
+      "Published open attestation standard · first Surety underwriting partnership",
+    ],
+  },
+];
+
+function Roadmap() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-20">
+      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+        <div className="text-sm uppercase tracking-[0.2em] text-white/60">
+          Roadmap
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          The UPI playbook, for attested reality.
+        </h2>
+      </motion.div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {roadmap.map((p, i) => (
+          <motion.div
+            key={p.phase}
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+            className="glass relative overflow-hidden rounded-2xl p-6"
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <div className="font-mono text-[11px] uppercase tracking-widest text-white/40">
+                Phase {i + 1}
+              </div>
+              <div className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/60">
+                {p.when}
+              </div>
+            </div>
+            <h3 className="text-2xl font-semibold tracking-tight text-white">
+              {p.phase}
+            </h3>
+            <ul className="mt-5 space-y-3">
+              {p.items.map((item, j) => (
+                <li key={j} className="flex gap-3 text-sm text-white/75">
+                  <span
+                    className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                      p.color === "emerald"
+                        ? "bg-emerald-400 shadow-[0_0_8px_rgb(16,185,129,0.7)]"
+                        : p.color === "indigo"
+                          ? "bg-indigo-400 shadow-[0_0_8px_rgb(99,102,241,0.7)]"
+                          : "bg-white"
+                    }`}
+                  />
+                  <span className="leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function LandingPage() {
   return (
     <main className="relative min-h-screen bg-[#050505] text-white">
@@ -561,10 +716,15 @@ function LandingPage() {
       <Hero />
       <ProblemScale />
       <Bento />
+      <LiveDemos />
+      <SuretySection />
+      <Verticals />
       <FeatureBlocks />
+      <Roadmap />
       <Matrix />
       <CTA />
       <Footer />
     </main>
   );
 }
+
