@@ -87,10 +87,10 @@ export function DualKeyDemo() {
 
   return (
     <div className="glass overflow-hidden rounded-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+      <div className="flex items-center justify-between border-b border-foreground/10 px-6 py-4">
         <div className="flex items-center gap-3">
           <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
-          <span className="font-mono text-xs text-white/60">
+          <span className="font-mono text-xs text-foreground/60">
             work_id · PWD-MH-1863900 · Ch. 12+400 → 13+640
           </span>
         </div>
@@ -98,7 +98,7 @@ export function DualKeyDemo() {
           {active === -1 && !done && (
             <button
               onClick={run}
-              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-black transition-transform hover:scale-105"
+              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-background transition-transform hover:scale-105"
             >
               <Play className="h-3 w-3" /> Run verification
             </button>
@@ -106,7 +106,7 @@ export function DualKeyDemo() {
           {(active >= 0 || done) && (
             <button
               onClick={reset}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/70 hover:bg-white/10"
+              className="inline-flex items-center gap-1.5 rounded-md border border-foreground/15 bg-foreground/5 px-3 py-1.5 text-xs text-foreground/70 hover:bg-foreground/10"
             >
               <RefreshCw className="h-3 w-3" /> Reset
             </button>
@@ -116,7 +116,7 @@ export function DualKeyDemo() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr]">
         {/* steps */}
-        <div className="border-white/10 p-6 lg:border-r">
+        <div className="border-foreground/10 p-6 lg:border-r">
           <ol className="space-y-3">
             {steps.map((s, i) => {
               const state =
@@ -133,12 +133,12 @@ export function DualKeyDemo() {
                   key={s.key}
                   className={`flex items-start gap-3 rounded-lg border p-3 transition-all ${
                     state === "idle"
-                      ? "border-white/5 opacity-40"
+                      ? "border-foreground/5 opacity-40"
                       : state === "run"
                         ? "border-emerald-500/30 bg-emerald-500/5"
                         : state === "await"
                           ? "border-indigo-500/40 bg-indigo-500/10"
-                          : "border-white/10 bg-white/[0.02]"
+                          : "border-foreground/10 bg-foreground/[0.02]"
                   }`}
                 >
                   <div
@@ -148,8 +148,8 @@ export function DualKeyDemo() {
                         : state === "await"
                           ? "bg-indigo-500/15 text-indigo-400"
                           : state === "run"
-                            ? "bg-white/10 text-white"
-                            : "bg-white/5 text-white/50"
+                            ? "bg-foreground/10 text-foreground"
+                            : "bg-foreground/5 text-foreground/50"
                     }`}
                   >
                     {state === "run" ? (
@@ -162,19 +162,19 @@ export function DualKeyDemo() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="truncate text-sm font-medium text-white">
+                      <div className="truncate text-sm font-medium text-foreground">
                         {s.label}
                       </div>
                       {state === "await" && (
                         <button
                           onClick={sign}
-                          className="shrink-0 rounded-md bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold text-white transition-transform hover:scale-105"
+                          className="shrink-0 rounded-md bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold text-foreground transition-transform hover:scale-105"
                         >
                           Sign with SDE key
                         </button>
                       )}
                     </div>
-                    <div className="mt-0.5 truncate font-mono text-[11px] text-white/50">
+                    <div className="mt-0.5 truncate font-mono text-[11px] text-foreground/50">
                       {s.detail}
                     </div>
                   </div>
@@ -186,7 +186,7 @@ export function DualKeyDemo() {
 
         {/* receipt */}
         <div className="p-6">
-          <div className="mb-3 font-mono text-[11px] uppercase tracking-widest text-white/40">
+          <div className="mb-3 font-mono text-[11px] uppercase tracking-widest text-foreground/40">
             Attestation certificate
           </div>
           <div className="space-y-2 font-mono text-xs">
@@ -201,16 +201,16 @@ export function DualKeyDemo() {
             ].map(([k, v]) => (
               <div
                 key={k}
-                className="flex items-center justify-between border-b border-white/5 pb-1.5"
+                className="flex items-center justify-between border-b border-foreground/5 pb-1.5"
               >
-                <span className="text-white/40">{k}</span>
+                <span className="text-foreground/40">{k}</span>
                 <span
                   className={
                     v === "pending" || v === "—"
-                      ? "text-white/40"
+                      ? "text-foreground/40"
                       : done && (k === "days_groundtruth" || k === "cert_hash")
                         ? "text-emerald-400"
-                        : "text-white/85"
+                        : "text-foreground/85"
                   }
                 >
                   {v}

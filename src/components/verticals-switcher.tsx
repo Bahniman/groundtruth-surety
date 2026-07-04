@@ -68,7 +68,7 @@ export function VerticalsSwitcher() {
 
   return (
     <div className="glass overflow-hidden rounded-2xl">
-      <div className="flex flex-wrap gap-1 border-b border-white/10 p-2">
+      <div className="flex flex-wrap gap-1 border-b border-foreground/10 p-2">
         {verticals.map((v) => {
           const IconV = v.icon;
           const on = v.key === active;
@@ -78,8 +78,8 @@ export function VerticalsSwitcher() {
               onClick={() => setActive(v.key)}
               className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all ${
                 on
-                  ? "bg-white text-black"
-                  : "text-white/60 hover:bg-white/5 hover:text-white"
+                  ? "bg-foreground text-background"
+                  : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
               }`}
             >
               <IconV className="h-4 w-4" />
@@ -105,29 +105,29 @@ export function VerticalsSwitcher() {
             <div className="text-xs uppercase tracking-widest text-rose-400/80">
               Where verification blocks the money
             </div>
-            <p className="mt-2 text-white/85">{cur.blocker}</p>
+            <p className="mt-2 text-foreground/85">{cur.blocker}</p>
 
             <div className="mt-6 text-xs uppercase tracking-widest text-emerald-400/80">
               What GroundTruth unlocks
             </div>
-            <p className="mt-2 text-white/85">{cur.unlock}</p>
+            <p className="mt-2 text-foreground/85">{cur.unlock}</p>
           </div>
           <div className="grid grid-cols-2 gap-3 self-start">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
-              <div className="text-xs uppercase tracking-widest text-white/40">
+            <div className="rounded-xl border border-foreground/10 bg-foreground/[0.02] p-5">
+              <div className="text-xs uppercase tracking-widest text-foreground/40">
                 Days to settle
               </div>
               <div className="mt-2 font-mono text-2xl text-emerald-400">
                 {cur.metric.days}
               </div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
-              <div className="text-xs uppercase tracking-widest text-white/40">
+            <div className="rounded-xl border border-foreground/10 bg-foreground/[0.02] p-5">
+              <div className="text-xs uppercase tracking-widest text-foreground/40">
                 Addressable
               </div>
-              <div className="mt-2 text-sm text-white/85">{cur.metric.tam}</div>
+              <div className="mt-2 text-sm text-foreground/85">{cur.metric.tam}</div>
             </div>
-            <div className="col-span-2 rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-[11px] text-white/50">
+            <div className="col-span-2 rounded-xl border border-foreground/10 bg-foreground/40 p-4 font-mono text-[11px] text-foreground/50">
               expansion order: public works → insurance → agri → trade →
               carbon
             </div>

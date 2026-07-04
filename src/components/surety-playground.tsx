@@ -59,11 +59,11 @@ export function SuretyPlayground() {
         <div className="mb-1 text-xs uppercase tracking-widest text-indigo-400">
           Delegation certificate
         </div>
-        <div className="mb-6 font-mono text-[11px] text-white/40">
+        <div className="mb-6 font-mono text-[11px] text-foreground/40">
           cert:0x7a4c…e021 · Ed25519 · exp 7d
         </div>
 
-        <label className="block text-xs text-white/60">
+        <label className="block text-xs text-foreground/60">
           Spend cap (per 24h)
         </label>
         <div className="mt-2 flex items-center gap-3">
@@ -76,28 +76,28 @@ export function SuretyPlayground() {
             onChange={(e) => setCap(Number(e.target.value))}
             className="w-full accent-indigo-500"
           />
-          <div className="w-24 shrink-0 rounded-md border border-white/10 bg-black/40 px-2 py-1 text-right font-mono text-sm text-white">
+          <div className="w-24 shrink-0 rounded-md border border-foreground/10 bg-foreground/40 px-2 py-1 text-right font-mono text-sm text-foreground">
             ₹{cap.toLocaleString("en-IN")}
           </div>
         </div>
 
-        <label className="mt-6 block text-xs text-white/60">
+        <label className="mt-6 block text-xs text-foreground/60">
           Allowed domains
         </label>
         <input
           value={domains}
           onChange={(e) => setDomains(e.target.value)}
-          className="mt-2 w-full rounded-md border border-white/10 bg-black/40 px-3 py-2 font-mono text-xs text-white outline-none focus:border-indigo-400/60"
+          className="mt-2 w-full rounded-md border border-foreground/10 bg-foreground/40 px-3 py-2 font-mono text-xs text-foreground outline-none focus:border-indigo-400/60"
         />
 
         <button
           onClick={trigger}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-foreground transition-transform hover:scale-[1.02]"
         >
           <Send className="h-4 w-4" /> Simulate agent action
         </button>
 
-        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-widest text-white/40">
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-widest text-foreground/40">
           <div className="rounded-md border border-emerald-500/20 bg-emerald-500/5 py-1.5 text-emerald-400">
             Allow
           </div>
@@ -111,14 +111,14 @@ export function SuretyPlayground() {
       </div>
 
       {/* action log */}
-      <div className="rounded-xl border border-white/10 bg-black/40 p-4">
-        <div className="mb-3 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-white/40">
+      <div className="rounded-xl border border-foreground/10 bg-foreground/40 p-4">
+        <div className="mb-3 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-foreground/40">
           <span>Signed action log</span>
           <span>tamper-evident · MCP proxy</span>
         </div>
 
         {log.length === 0 && (
-          <div className="flex h-64 items-center justify-center text-center text-sm text-white/40">
+          <div className="flex h-64 items-center justify-center text-center text-sm text-foreground/40">
             Simulate an agent action to see the policy engine decide.
           </div>
         )}
@@ -152,7 +152,7 @@ export function SuretyPlayground() {
                 >
                   <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${tone.match(/text-\S+/)?.[0]}`} />
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2 font-mono text-xs text-white/80">
+                    <div className="flex items-center justify-between gap-2 font-mono text-xs text-foreground/80">
                       <span className="truncate">
                         {a.tool}({a.domain}
                         {a.amount ? `, ₹${a.amount.toLocaleString("en-IN")}` : ""})
@@ -163,7 +163,7 @@ export function SuretyPlayground() {
                         {a.verdict}
                       </span>
                     </div>
-                    <div className="mt-0.5 text-[11px] text-white/50">
+                    <div className="mt-0.5 text-[11px] text-foreground/50">
                       {a.reason}
                     </div>
                   </div>
