@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Money at the speed of verified reality" },
+      { name: "description", content: "Dual-key architecture where AI scales operations and humans execute legal authority. GroundTruth certifies physical facts. Surety governs AI actors." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Money at the speed of verified reality" },
+      { property: "og:description", content: "Dual-key architecture where AI scales operations and humans execute legal authority. GroundTruth certifies physical facts. Surety governs AI actors." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Money at the speed of verified reality" },
+      { name: "twitter:description", content: "Dual-key architecture where AI scales operations and humans execute legal authority. GroundTruth certifies physical facts. Surety governs AI actors." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7d602fe6-d546-4564-bf85-8ede12f5a9e8/id-preview-fee28312--170af158-8379-4fa4-90c4-7bce63616159.lovable.app-1783185195816.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7d602fe6-d546-4564-bf85-8ede12f5a9e8/id-preview-fee28312--170af158-8379-4fa4-90c4-7bce63616159.lovable.app-1783185195816.png" },
     ],
     links: [
       {
