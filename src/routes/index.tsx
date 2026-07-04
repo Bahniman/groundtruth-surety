@@ -12,6 +12,9 @@ import {
   CheckCircle2,
   Circle,
 } from "lucide-react";
+import { DualKeyDemo } from "@/components/dual-key-demo";
+import { SuretyPlayground } from "@/components/surety-playground";
+import { VerticalsSwitcher } from "@/components/verticals-switcher";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
