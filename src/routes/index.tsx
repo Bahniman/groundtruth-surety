@@ -72,12 +72,15 @@ function Nav() {
               </a>
             ))}
           </nav>
-          <a
-            href="#deploy"
-            className="rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm font-medium text-foreground transition-all hover:border-indigo-400/50 hover:bg-indigo-500/10 hover:shadow-[0_0_20px_rgb(99,102,241,0.35)]"
-          >
-            Deploy Demo
-          </a>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <a
+              href="#deploy"
+              className="btn-press rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm font-medium text-foreground transition-all hover:border-indigo-400/50 hover:bg-indigo-500/10 hover:shadow-[0_0_20px_rgb(99,102,241,0.35)]"
+            >
+              Deploy Demo
+            </a>
+          </div>
         </div>
       </div>
     </header>
