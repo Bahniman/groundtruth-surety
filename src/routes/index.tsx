@@ -15,6 +15,7 @@ import {
 import { DualKeyDemo } from "@/components/dual-key-demo";
 import { SuretyPlayground } from "@/components/surety-playground";
 import { VerticalsSwitcher } from "@/components/verticals-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
