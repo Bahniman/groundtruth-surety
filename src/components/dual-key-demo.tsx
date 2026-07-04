@@ -98,7 +98,7 @@ export function DualKeyDemo() {
           {active === -1 && !done && (
             <button
               onClick={run}
-              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-background transition-transform hover:scale-105"
+              className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-background transition-transform btn-press hover:scale-105"
             >
               <Play className="h-3 w-3" /> Run verification
             </button>
@@ -168,7 +168,7 @@ export function DualKeyDemo() {
                       {state === "await" && (
                         <button
                           onClick={sign}
-                          className="shrink-0 rounded-md bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold text-foreground transition-transform hover:scale-105"
+                          className="shrink-0 rounded-md bg-indigo-500 px-2.5 py-1 text-[11px] font-semibold text-foreground transition-transform btn-press hover:scale-105"
                         >
                           Sign with SDE key
                         </button>

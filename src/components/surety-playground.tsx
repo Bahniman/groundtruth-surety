@@ -92,7 +92,7 @@ export function SuretyPlayground() {
 
         <button
           onClick={trigger}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-foreground transition-transform hover:scale-[1.02]"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-foreground transition-transform btn-press hover:scale-[1.02]"
         >
           <Send className="h-4 w-4" /> Simulate agent action
         </button>

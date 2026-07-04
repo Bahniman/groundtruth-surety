@@ -143,7 +143,7 @@ function Hero() {
         >
           <a
             href="#architecture"
-            className="group inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all hover:scale-105 hover:shadow-[0_0_40px_rgb(255,255,255,0.25)]"
+            className="group inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all btn-press hover:scale-105 hover:shadow-[0_0_40px_oklch(from_var(--foreground)_l_c_h_/_0.25)]"
           >
             View System Architecture
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -524,7 +524,7 @@ function CTA() {
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all btn-press hover:scale-105"
           >
             Deploy Demo <ArrowRight className="h-4 w-4" />
           </a>
