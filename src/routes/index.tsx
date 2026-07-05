@@ -2,36 +2,39 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Sparkles,
-  MapPin,
-  ShieldCheck,
   ArrowRight,
-  Terminal,
-  Layers,
-  TrendingUp,
-  Zap,
-  CheckCircle2,
-  Circle,
+  Camera,
+  Fingerprint,
+  Banknote,
+  Clock,
+  AlertTriangle,
+  Eye,
+  Scale,
+  Users,
+  Cpu,
+  UserCheck,
+  BadgeCheck,
+  BookOpen,
 } from "lucide-react";
 import { DualKeyDemo } from "@/components/dual-key-demo";
 import { SuretyPlayground } from "@/components/surety-playground";
-import { VerticalsSwitcher } from "@/components/verticals-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "ReEnvision 5.0 — Money at the speed of verified reality" },
+      { title: "Realium — Money at the speed of verified reality" },
       {
         name: "description",
         content:
-          "Dual-key architecture where AI scales operations and humans execute legal authority. GroundTruth certifies physical facts. Surety governs AI actors.",
+          "Realium turns physical public-works progress into bank-grade, financeable receivables. Evidence, Authority, and Liquidity — one platform, one chain of custody.",
       },
-      { property: "og:title", content: "ReEnvision 5.0" },
+      { property: "og:title", content: "Realium" },
       {
         property: "og:description",
         content:
-          "GroundTruth certifies the physical facts. Surety governs the AI actors.",
+          "Money that moves at the speed of verified reality. Realium is the settlement rail for public works.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -46,10 +49,22 @@ const fadeUp = {
   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
 };
 
+/* ============================ NAV ============================ */
+
 function Nav() {
-  const links = ["Dual-Key Architecture", "GroundTruth", "Surety", "Threat Models"];
+  const links = [
+    { label: "Problem", href: "#problem" },
+    { label: "Architecture", href: "#architecture" },
+    { label: "Money flow", href: "#flow" },
+    { label: "Red team", href: "#redteam" },
+    { label: "Validation", href: "#validation" },
+  ];
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.2,
+  });
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <motion.div
@@ -58,33 +73,33 @@ function Nav() {
       />
       <div className="mx-auto mt-4 max-w-7xl px-4">
         <div className="glass flex items-center justify-between rounded-2xl px-4 py-3 sm:px-6">
-          <a href="#" className="flex items-center gap-2">
+          <a href="#" className="flex items-center gap-2.5">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgb(16,185,129,0.9)]" />
             </span>
-            <span className="text-sm font-semibold tracking-tight text-foreground sm:text-base">
-              ReEnvision <span className="text-foreground/60">5.0</span>
+            <span className="text-base font-semibold tracking-tight text-foreground">
+              Realium
             </span>
           </a>
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {links.map((l) => (
               <a
-                key={l}
-                href={`#${l.toLowerCase().replace(/[^a-z]/g, "")}`}
+                key={l.href}
+                href={l.href}
                 className="text-sm text-foreground/60 transition-colors hover:text-foreground"
               >
-                {l}
+                {l.label}
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <a
-              href="#deploy"
-              className="btn-press rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm font-medium text-foreground transition-all hover:border-indigo-400/50 hover:bg-indigo-500/10 hover:shadow-[0_0_20px_rgb(99,102,241,0.35)]"
+              href="#try"
+              className="btn-press rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm font-medium text-foreground transition-all hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:shadow-[0_0_20px_rgb(16,185,129,0.35)]"
             >
-              Deploy Demo
+              Try the demo
             </a>
           </div>
         </div>
@@ -93,32 +108,24 @@ function Nav() {
   );
 }
 
+/* ============================ HERO ============================ */
+
 function Hero() {
   return (
     <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48">
-      {/* radial blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="animate-blob absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-indigo-500/25 blur-[140px]" />
         <div className="animate-blob absolute -bottom-40 left-[-10%] h-[520px] w-[520px] rounded-full bg-emerald-500/20 blur-[140px]" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage:
-              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
-          }}
-        />
+        <div className="grid-bg absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 text-center">
         <motion.div {...fadeUp} className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-foreground/5 px-4 py-1 text-sm text-emerald-400 backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5" />
-            Theme: Human-AI Synergy
+          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/5 px-4 py-1 text-xs text-foreground/70 backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+            Built for ReEnvision 5.0
             <span className="mx-1 h-1 w-1 rounded-full bg-foreground/30" />
-            <span className="text-foreground/70">0 Unverifiable Claims</span>
+            Human-AI Synergy · XLRI
           </div>
         </motion.div>
 
@@ -137,9 +144,10 @@ function Hero() {
           transition={{ ...fadeUp.transition, delay: 0.1 }}
           className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
         >
-          GroundTruth certifies the physical facts. Surety governs the AI actors.
-          A unified dual-key architecture where AI scales operations, and humans
-          execute legal authority.
+          Realium is the settlement rail for public works. It turns
+          site-verified progress into a bank-grade, financeable instrument —
+          in days, not months — through one connected chain of Evidence,
+          Authority, and Liquidity.
         </motion.p>
 
         <motion.div
@@ -151,14 +159,14 @@ function Hero() {
             href="#architecture"
             className="group btn-press inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background shadow-lg shadow-foreground/20 transition-all hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/30"
           >
-            View System Architecture
+            See the architecture
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
-            href="#threatmodels"
-            className="inline-flex items-center gap-2 rounded-md border border-foreground/20 px-6 py-3 text-foreground transition-colors hover:bg-foreground/10"
+            href="#redteam"
+            className="btn-press inline-flex items-center gap-2 rounded-md border border-foreground/20 px-6 py-3 text-foreground transition-colors hover:bg-foreground/10"
           >
-            Read Threat Models
+            The uncomfortable question
           </a>
         </motion.div>
       </div>
@@ -166,191 +174,381 @@ function Hero() {
   );
 }
 
-const chips = [
+/* ============================ PROBLEM ============================ */
+
+const problemStats = [
+  {
+    stat: "₹96,000 Cr",
+    label: "Maharashtra alone",
+    body: "Contractor dues that triggered the 2025 statewide work stoppage. One state. One department.",
+    src: "1",
+  },
   {
     stat: "₹1–3 Lakh Cr",
-    body:
-      "Stuck in delayed payments & disputes. Maharashtra alone holds a ₹96,000 Cr+ backlog due to manual Measurement Books.",
+    label: "National range",
+    body: "Estimated capital stuck in delayed public-works payments across India — NITI Aayog member estimate to industry high.",
+    src: "2",
   },
   {
     stat: "7–8 Years",
-    body:
-      "Average duration of construction arbitrations, with 85% of claims still pending resolution.",
+    label: "Arbitration",
+    body: "Average duration of Indian construction arbitrations. ~85% of claims remain pending.",
+    src: "3",
   },
   {
-    stat: "300k+ Stars",
-    body:
-      "OpenClaw AI agent has crossed 300k stars. Agentic scale is here, but compliance stalls without cryptographic liability.",
+    stat: "18–24% p.a.",
+    label: "Bridge finance",
+    body: "What contractors pay in the informal market to survive the wait. It gets priced into every bid.",
+    src: "—",
   },
 ];
 
-function ProblemScale() {
+function Problem() {
   return (
-    <section className="relative mx-auto -mt-8 max-w-7xl px-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {chips.map((c, i) => (
+    <section id="problem" className="mx-auto max-w-7xl px-4 pt-16 pb-24">
+      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+        <div className="text-xs uppercase tracking-[0.2em] text-rose-400/80">
+          The problem
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          The largest working-capital sink in the Indian economy.
+        </h2>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          Not a UI problem. A settlement problem. Between a bill being raised
+          and a contractor being paid, months disappear — and the money leaks
+          out of the real economy into arbitration and informal lending.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {problemStats.map((c, i) => (
           <motion.div
             key={i}
             {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+            transition={{ ...fadeUp.transition, delay: i * 0.06 }}
             className="glass rounded-2xl p-6"
           >
-            <div className="text-2xl font-semibold tracking-tight text-foreground">
+            <div className="text-3xl font-semibold tracking-tight text-foreground">
               {c.stat}
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <div className="mt-1 text-[11px] uppercase tracking-widest text-foreground/40">
+              {c.label} <span className="text-foreground/25">[{c.src}]</span>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {c.body}
             </p>
           </motion.div>
         ))}
       </div>
+
+      {/* Why digitisation alone failed */}
+      <motion.div
+        {...fadeUp}
+        className="mt-10 grid grid-cols-1 gap-6 rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-8 lg:grid-cols-[1fr_1.3fr]"
+      >
+        <div>
+          <div className="text-xs uppercase tracking-widest text-amber-400/90">
+            Why &quot;just digitise it&quot; failed
+          </div>
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
+            CPWD&apos;s e-Measurement Book already exists.
+          </h3>
+          <div className="mt-3 font-mono text-sm text-foreground/60">
+            ~₹20,000 Cr/yr paid on it. Money is still slow.
+          </div>
+        </div>
+        <div className="text-foreground/80">
+          <p>
+            A digital record is not a financial instrument. An e-MB entry sits
+            in a state IT system that no bank underwrites and no queue makes
+            attributable. The bottleneck was never the paper — it was that
+            (a) the record isn&apos;t bank-grade, and (b) when the file stalls,
+            no one can point to whose desk it&apos;s sitting on.
+          </p>
+          <p className="mt-3 text-sm text-foreground/60">
+            Realium closes both. Verified evidence becomes a signed
+            instrument, and every human touch on that instrument is a signed,
+            timestamped event in a tamper-evident chain.
+            <span className="text-foreground/30"> [4]</span>
+          </p>
+        </div>
+      </motion.div>
     </section>
   );
 }
 
-function Bento() {
+/* ============================ ARCHITECTURE — 3 LAYERS ============================ */
+
+const layers = [
+  {
+    n: "01",
+    key: "evidence",
+    tag: "Evidence",
+    icon: Camera,
+    color: "emerald",
+    title: "Site truth becomes a bank-grade e-invoice.",
+    body: "Geo-fenced drone / handset capture. AI estimates quantities against the BOQ. The site engineer (SDE) attests with an Ed25519 signature scoped to that work item. Every step is hash-chained into a tamper-evident ledger.",
+    bullets: [
+      "Geo-fenced capture · frames + SHA + GPS witness",
+      "AI quantity assessment vs. BOQ (variance surfaced, not hidden)",
+      "Dual-key certificate: machine evidence + accountable engineer signature",
+      "Output: a verified e-invoice a bank can price",
+    ],
+  },
+  {
+    n: "02",
+    key: "authority",
+    tag: "Authority",
+    icon: UserCheck,
+    color: "indigo",
+    title: "Every human in the chain acts under a signed, scoped mandate.",
+    body: "Engineers get certification mandates — value caps, category caps, geography fence, auto-revocation on transfer. Approving officers get thresholds with escrow. Every approval — and every non-approval — is a signed, timestamped event on the chain. The approval clock is attributable.",
+    bullets: [
+      "Certification mandates kill certifier fraud at source",
+      "Escrow-and-co-sign above threshold, not silent stalling",
+      "Auto-revocation on officer transfer — no stale keys",
+      "Non-approval is an event too — the queue is measurable",
+    ],
+    footnote:
+      "The same mandate layer later governs AI agents that prepare bills — same primitive, wider scope.",
+  },
+  {
+    n: "03",
+    key: "liquidity",
+    tag: "Liquidity",
+    icon: Banknote,
+    color: "amber",
+    title: "The verified instrument is financed on day one.",
+    body: "A bank advances 60% at T+1 against the certified receivable, on a reliability-based advance curve that steps 50%→85% with clean history. A 40% holdback pool absorbs deductions first. When treasury pays, the balance is released minus itemised, on-chain charges.",
+    bullets: [
+      "T+1 advance · 60% base, curve 50→85% by reliability tier",
+      "40% holdback absorbs deductions before principal is touched",
+      "Bank yield: ~11% p.a. on holdback-buffered, near-sovereign paper (assumption)",
+      "Platform take: 35 bps + SaaS — flywheel data compounds",
+    ],
+  },
+];
+
+function Architecture() {
   return (
-    <section id="dualkeyarchitecture" className="mx-auto max-w-7xl px-4 py-28">
+    <section id="architecture" className="mx-auto max-w-7xl px-4 py-24">
       <motion.div {...fadeUp} className="mb-14 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-emerald-400/80">
-          The Unified Platform
+        <div className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
+          The solution · one platform, three layers
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          One architecture. Two rails. Zero unverifiable claims.
+          Evidence &rarr; Authority &rarr; Liquidity.
         </h2>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          Realium is one connected chain of custody. Each layer produces the
+          input the next layer needs. Nothing moves money alone.
+        </p>
       </motion.div>
 
-      <div id="architecture" className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {/* Card 1 — spans 2 */}
-        <motion.div
-          {...fadeUp}
-          className="glass relative overflow-hidden rounded-2xl p-8 md:col-span-2"
-        >
-          <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400">
-            <Layers className="h-4 w-4" /> Dual-Key Execution
-          </div>
-          <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-            The Dual-Key Mechanism
-          </h3>
-          <p className="mt-3 max-w-2xl text-muted-foreground">
-            Neither AI nor human moves money alone. Sensors and AI capture the
-            physical state (drone passes, vision-based quantity assessment). An
-            accountable human provides the cryptographic signature. AI provides
-            scale; the human provides legal standing.
-          </p>
-
-          <div className="mt-8 rounded-lg border border-foreground/10 bg-black p-4 font-mono text-sm shadow-2xl">
-            <div className="mb-3 flex items-center gap-1.5">
-              <span className="h-3 w-3 rounded-full bg-red-500/70" />
-              <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
-              <span className="h-3 w-3 rounded-full bg-emerald-500/70" />
-              <span className="ml-3 flex items-center gap-2 text-xs text-foreground/40">
-                <Terminal className="h-3 w-3" /> groundtruth — settlement
-              </span>
-            </div>
-            <div className="space-y-1.5 leading-relaxed">
-              <div className="text-foreground/90">
-                <span className="text-emerald-400">$</span> python -m groundtruth
-                compare --invoice 1863900 --days 148
-              </div>
-              <div className="text-foreground/50">
-                <span className="text-indigo-400">&gt;</span> Status Quo: 148
-                Days to Settlement
-              </div>
-              <div className="text-foreground/90">
-                <span className="text-indigo-400">&gt;</span> GroundTruth:{" "}
-                <span className="text-emerald-400">
-                  T+2 Bank Payout (Verified)
+      {/* horizontal flow diagram */}
+      <div className="mb-12 hidden items-stretch gap-3 lg:flex">
+        {layers.map((l, i) => (
+          <div key={l.key} className="flex flex-1 items-center gap-3">
+            <div
+              className={`flex-1 rounded-xl border p-4 ${
+                l.color === "emerald"
+                  ? "border-emerald-500/30 bg-emerald-500/[0.04]"
+                  : l.color === "indigo"
+                    ? "border-indigo-500/30 bg-indigo-500/[0.04]"
+                    : "border-amber-500/30 bg-amber-500/[0.04]"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] text-foreground/40">
+                  {l.n}
+                </span>
+                <span className="text-sm font-semibold text-foreground">
+                  {l.tag}
                 </span>
               </div>
+              <div className="mt-1 text-xs text-foreground/60">
+                {l.key === "evidence"
+                  ? "site → certified e-invoice"
+                  : l.key === "authority"
+                    ? "signed mandate → signed action"
+                    : "instrument → advance → settle"}
+              </div>
             </div>
+            {i < layers.length - 1 && (
+              <ArrowRight className="h-4 w-4 shrink-0 text-foreground/40" />
+            )}
           </div>
-        </motion.div>
+        ))}
+      </div>
 
-        {/* Card 2 */}
-        <motion.div
-          id="groundtruth"
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.08 }}
-          className="glass relative overflow-hidden rounded-2xl p-8"
-        >
-          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10">
-            <MapPin className="h-5 w-5 text-emerald-400" />
-          </div>
-          <h3 className="mt-4 text-xl font-semibold tracking-tight text-foreground">
-            GroundTruth: The Physical Rail
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Translating public works into bank-financeable instruments.
-            Resolving the hidden bottleneck by making a site measurement as
-            instant and trusted as a UPI transaction.
-          </p>
-        </motion.div>
-
-        {/* Card 3 — spans 3 */}
-        <motion.div
-          id="surety"
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.12 }}
-          className="glass relative overflow-hidden rounded-2xl p-8 md:col-span-3"
-        >
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-indigo-500/10 to-transparent" />
-          <div className="flex flex-col gap-6 md:flex-row md:items-start">
-            <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-indigo-500/30 bg-indigo-500/10">
-              <ShieldCheck className="h-6 w-6 text-indigo-400" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                Surety: The AI Authorization Rail
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {layers.map((l, i) => {
+          const Icon = l.icon;
+          const accent =
+            l.color === "emerald"
+              ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+              : l.color === "indigo"
+                ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/10"
+                : "text-amber-400 border-amber-500/30 bg-amber-500/10";
+          return (
+            <motion.div
+              key={l.key}
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7"
+            >
+              <div className="flex items-center justify-between">
+                <div
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent}`}
+                >
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="font-mono text-xs text-foreground/40">
+                  Layer {l.n}
+                </div>
+              </div>
+              <div
+                className={`mt-5 text-[11px] uppercase tracking-widest ${
+                  l.color === "emerald"
+                    ? "text-emerald-400/90"
+                    : l.color === "indigo"
+                      ? "text-indigo-400/90"
+                      : "text-amber-400/90"
+                }`}
+              >
+                {l.tag}
+              </div>
+              <h3 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
+                {l.title}
               </h3>
-              <p className="mt-3 max-w-4xl text-muted-foreground">
-                When AI acts, who holds the liability? Surety provides Ed25519
-                cryptographic delegation certificates and an MCP-compatible
-                proxy. A human signs a scoped, revocable grant (spend caps,
-                allowed domains). Out-of-scope actions are escrowed for 1-tap
-                human approval.
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {l.body}
               </p>
-            </div>
-            <div className="hidden shrink-0 flex-col items-end gap-2 md:flex">
-              {["Ed25519 Grant", "Spend Cap: ₹50,000", "Domain: *.gov.in"].map(
-                (t) => (
-                  <div
-                    key={t}
-                    className="rounded-md border border-foreground/10 bg-foreground/5 px-3 py-1.5 font-mono text-xs text-foreground/70"
+              <ul className="mt-5 space-y-2 border-t border-foreground/10 pt-5">
+                {l.bullets.map((b) => (
+                  <li
+                    key={b}
+                    className="flex gap-2.5 text-sm text-foreground/75"
                   >
-                    {t}
-                  </div>
-                ),
+                    <span
+                      className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                        l.color === "emerald"
+                          ? "bg-emerald-400"
+                          : l.color === "indigo"
+                            ? "bg-indigo-400"
+                            : "bg-amber-400"
+                      }`}
+                    />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              {l.footnote && (
+                <div className="mt-5 rounded-md border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/50">
+                  {l.footnote}
+                </div>
               )}
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
 }
 
-function FeatureBlocks() {
+/* ============================ MONEY FLOW ============================ */
+
+const flowSteps = [
+  {
+    day: "Day 0",
+    title: "Site capture + AI prefill",
+    body: "Drone pass + handset video. AI computes 1,240 m² of bituminous concrete against BOQ. Variance 0.4%.",
+  },
+  {
+    day: "Day 0",
+    title: "Dual-key certification",
+    body: "SDE reviews on-device, signs with Ed25519 key scoped to work_id PWD-MH-1863900. Certificate hashed into ledger.",
+  },
+  {
+    day: "T+1",
+    title: "Bank advance",
+    body: "60% of ₹18,63,900 = ₹11,18,340 advanced to contractor at ~11% p.a. Holdback pool funded with 40%.",
+  },
+  {
+    day: "T+2 → T+90",
+    title: "Approval chain runs — visibly",
+    body: "Each approver acts under a signed mandate. Every touch is timestamped. No touch, no invisible delay.",
+  },
+  {
+    day: "T+N",
+    title: "Treasury settles",
+    body: "Deductions are absorbed by the holdback first. Balance released minus itemised charges. Reliability score updates.",
+  },
+];
+
+function MoneyFlow() {
   return (
-    <section className="mx-auto max-w-7xl space-y-28 px-4 py-16">
-      {/* A */}
-      <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-        <motion.div {...fadeUp} className="order-2 md:order-1">
-          <div className="glass relative overflow-hidden rounded-2xl p-8">
-            <div className="mb-6 flex items-center justify-between">
+    <section id="flow" className="mx-auto max-w-7xl px-4 py-24">
+      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+        <div className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
+          How money moves
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          From site to bank account — measured in days, not months.
+        </h2>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          A worked ₹18.6 lakh road-works bill. The traditional path takes 148
+          days. The Realium path advances 60% at T+1 and lets treasury settle
+          at its own pace behind a holdback buffer.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_1fr]">
+        {/* Timeline */}
+        <div className="relative">
+          <div className="absolute left-3 top-2 bottom-2 w-px bg-gradient-to-b from-emerald-500/60 via-foreground/10 to-indigo-500/60" />
+          <ol className="space-y-4">
+            {flowSteps.map((s, i) => (
+              <motion.li
+                key={i}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.05 }}
+                className="relative pl-10"
+              >
+                <span className="absolute left-1.5 top-3 h-3 w-3 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.7)] ring-4 ring-background" />
+                <div className="glass rounded-xl p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-sm font-semibold text-foreground">
+                      {s.title}
+                    </div>
+                    <div className="rounded-md border border-foreground/10 bg-foreground/5 px-2 py-0.5 font-mono text-[10px] text-foreground/60">
+                      {s.day}
+                    </div>
+                  </div>
+                  <p className="mt-1.5 text-sm text-muted-foreground">
+                    {s.body}
+                  </p>
+                </div>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Waterfall + worked example */}
+        <motion.div {...fadeUp} className="space-y-6">
+          <div className="glass rounded-2xl p-6">
+            <div className="mb-4 flex items-center justify-between">
               <div className="text-xs uppercase tracking-widest text-emerald-400">
-                Settlement Waterfall
+                Reliability-based advance curve
               </div>
-              <div className="font-mono text-xs text-foreground/50">60 / 40</div>
+              <div className="font-mono text-xs text-foreground/50">60/40</div>
             </div>
             {[
-              { label: "Advance Rate", val: 60, tier: "Tier 1" },
-              { label: "Advance Rate", val: 72, tier: "Tier 2" },
-              { label: "Advance Rate", val: 85, tier: "Tier 3" },
+              { tier: "Tier 1 · new contractor", val: 50 },
+              { tier: "Tier 2 · 6+ clean cycles", val: 72 },
+              { tier: "Tier 3 · established", val: 85 },
             ].map((r, i) => (
-              <div key={i} className="mb-5 last:mb-0">
+              <div key={i} className="mb-4 last:mb-0">
                 <div className="mb-1.5 flex items-center justify-between text-sm">
                   <span className="text-foreground/70">{r.tier}</span>
                   <span className="font-mono text-emerald-400">{r.val}%</span>
@@ -360,79 +558,44 @@ function FeatureBlocks() {
                     initial={{ width: 0 }}
                     whileInView={{ width: `${r.val}%` }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.15 * i, ease: "easeOut" }}
+                    transition={{
+                      duration: 1,
+                      delay: 0.15 * i,
+                      ease: "easeOut",
+                    }}
                     className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-300"
                   />
                 </div>
               </div>
             ))}
-            <div className="mt-6 rounded-lg border border-foreground/10 bg-foreground/40 p-3 font-mono text-xs text-foreground/60">
-              Holdback pool → 40% principal protection · deduction-absorbed
+            <div className="mt-5 rounded-lg border border-foreground/10 bg-foreground/[0.03] p-3 font-mono text-xs text-foreground/60">
+              Holdback pool → 40% principal buffer · deductions absorbed first
             </div>
           </div>
-        </motion.div>
-        <motion.div {...fadeUp} className="order-1 md:order-2">
-          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400">
-            <TrendingUp className="h-4 w-4" /> Reliability Flywheel
-          </div>
-          <h3 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Holdback-First Deductions.
-          </h3>
-          <p className="mt-4 max-w-lg text-muted-foreground">
-            Our 60/40 model introduces a reliability flywheel. Clean history
-            visibly steps the advance rate up, while deduction absorption
-            protects the principal.
-          </p>
-        </motion.div>
-      </div>
 
-      {/* B */}
-      <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-        <motion.div {...fadeUp}>
-          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-indigo-400">
-            <Zap className="h-4 w-4" /> Agent Underwriting
-          </div>
-          <h3 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            The Lloyd&apos;s of London for Machine Labor.
-          </h3>
-          <p className="mt-4 max-w-lg text-muted-foreground">
-            Once actions are certified and logged via MCP proxies, the history
-            becomes actuarial data. Agents get bonded the way contractors get
-            bonded.
-          </p>
-        </motion.div>
-        <motion.div {...fadeUp}>
-          <div className="glass relative overflow-hidden rounded-2xl p-8">
-            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl" />
-            <div className="mb-6 flex items-center justify-between">
-              <div className="text-xs uppercase tracking-widest text-indigo-400">
-                Agent Bond · #A-2041
-              </div>
-              <div className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-400">
-                ACTIVE
-              </div>
+          <div className="glass rounded-2xl p-6">
+            <div className="mb-3 text-xs uppercase tracking-widest text-indigo-400">
+              Worked example · invoice #1863900
             </div>
-            <div className="space-y-3 font-mono text-xs">
+            <dl className="space-y-2 font-mono text-sm">
               {[
-                ["principal", "openclaw://agent/underwriter-v3"],
-                ["scope", "invoice.verify · payout.request"],
-                ["cap", "₹5,00,000 / 24h"],
-                ["signer", "0xF4…9C · Ed25519"],
-                ["premium", "0.24% APR"],
+                ["Certified invoice", "₹18,63,900"],
+                ["T+1 advance (Tier 2, 60%)", "₹11,18,340"],
+                ["Holdback pool (40%)", "₹7,45,560"],
+                ["Discount to bank (~11% p.a., ~30d)", "≈ ₹10,236"],
+                ["Platform fee (35 bps)", "₹6,524"],
+                ["Contractor take vs. status quo", "97% vs ~91%"],
+                ["Days to first cash", "1 vs 148"],
               ].map(([k, v]) => (
                 <div
                   key={k}
-                  className="flex items-center justify-between border-b border-foreground/5 pb-2"
+                  className="flex items-center justify-between border-b border-foreground/5 pb-1.5 last:border-0"
                 >
-                  <span className="text-foreground/40">{k}</span>
-                  <span className="text-foreground/80">{v}</span>
+                  <dt className="text-foreground/50">{k}</dt>
+                  <dd className="text-foreground/90">{v}</dd>
                 </div>
               ))}
-            </div>
-            <div className="mt-5 flex items-center gap-2 text-xs text-foreground/50">
-              <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" />
-              47 signed actions · 0 escrow escalations · last 30d
-            </div>
+            </dl>
           </div>
         </motion.div>
       </div>
@@ -440,136 +603,248 @@ function FeatureBlocks() {
   );
 }
 
-const matrix: Array<[string, "done" | "roadmap", string?]> = [
-  ["Ed25519 Cryptography (RFC 8032 in pure Python)", "done", "47 Tests Pass"],
-  ["10-Check Policy Engine (Escrows, Rate Limits, Domains)", "done"],
-  ["60/40 Settlement Waterfall Financial Model", "done", "22 Tests Pass"],
-  ["SQLite Persistence & Offline Merchant Verifier", "done"],
-  ["Written Threat Model & Residual Risk Documentation", "done"],
-  ["Vision Models & PFMS (Public Financial Management) Adapters", "roadmap"],
+/* ============================ RED TEAM — DELIBERATE DELAY ============================ */
+
+const redteamAnswers = [
+  {
+    icon: Eye,
+    tag: "Attributable",
+    title: "&quot;The file is moving&quot; stops working as an excuse.",
+    body: "Every approval and every non-approval is a signed, timestamped event in a tamper-evident chain. When a bill has sat on a specific officer\u2019s desk for 47 days, the system says so. Sunlight on the queue is the disinfectant.",
+  },
+  {
+    icon: Scale,
+    tag: "Priced",
+    title: "The payer gets underwritten, not just the contractor.",
+    body: "Realium scores payment behavior per paying division, not just per contractor. Divisions that deliberately delay see their contractors offered worse advance terms — contractors price that into bids — those divisions\u2019 projects cost more. Delay stops being free.",
+  },
+  {
+    icon: Users,
+    tag: "Beachhead",
+    title: "Launch where the money exists, avoid where it doesn\u2019t.",
+    body: "Start with centrally-funded scheme accounts where funds are allocated but the process is slow. The payer-score keeps the bank out of deliberately-slow queues on its own. That is underwriting discipline, not a limitation we hide.",
+  },
 ];
 
-function Matrix() {
+function RedTeam() {
   return (
-    <section id="threatmodels" className="mx-auto max-w-7xl px-4 py-28">
-      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-indigo-400/80">
-          CTO Validation Matrix
+    <section id="redteam" className="relative overflow-hidden py-24">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-1/2 left-1/2 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-500/[0.08] blur-[140px]" />
+      </div>
+      <div className="mx-auto max-w-7xl px-4">
+        <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-rose-400">
+            <AlertTriangle className="h-3.5 w-3.5" />
+            Red team · we&apos;ll ask it before you do
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+            The uncomfortable question:
+            <br />
+            <span className="text-rose-400/90">
+              what if the delay is deliberate?
+            </span>
+          </h2>
+          <p className="mt-5 max-w-3xl text-foreground/80">
+            In India, payments are sometimes deliberately delayed. Works
+            sanctioned beyond the budget so treasuries ration cash by queuing
+            bills. Fiscal-year-end games. A discretionary queue that invites
+            rent-seeking. Political deprioritisation of certain contractors or
+            regions. If we don&apos;t say this out loud, the judges will.
+          </p>
+          <p className="mt-3 max-w-3xl text-muted-foreground">
+            Realium doesn&apos;t pretend to abolish this. It attacks it in
+            three ways.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {redteamAnswers.map((a, i) => {
+            const Icon = a.icon;
+            return (
+              <motion.div
+                key={i}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+                className="glass relative overflow-hidden rounded-2xl p-7"
+              >
+                <div className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-400">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="text-[11px] uppercase tracking-widest text-rose-400/80">
+                  {a.tag}
+                </div>
+                <h3
+                  className="mt-1 text-lg font-semibold text-foreground"
+                  dangerouslySetInnerHTML={{ __html: a.title }}
+                />
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {a.body}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          Enterprise-Grade from Day Zero.
+
+        <motion.blockquote
+          {...fadeUp}
+          className="mx-auto mt-12 max-w-4xl rounded-2xl border-l-2 border-rose-400/60 bg-foreground/[0.03] py-6 pl-6 pr-8 text-lg italic text-foreground/85 sm:text-xl"
+        >
+          &ldquo;Where non-payment is a funded political choice, no fintech
+          fixes it. Realium&apos;s job is to detect those payers and price
+          them out. That is underwriting discipline, not a limitation we
+          hide.&rdquo;
+        </motion.blockquote>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ HUMAN-AI SYNERGY ============================ */
+
+function Synergy() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-16">
+      <motion.div {...fadeUp} className="mb-10 max-w-3xl">
+        <div className="text-xs uppercase tracking-[0.2em] text-foreground/60">
+          Event theme · Human-AI Synergy
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+          Divide the work by what only each side can do.
         </h2>
       </motion.div>
 
-      <motion.div {...fadeUp} className="glass overflow-hidden rounded-2xl">
-        <table className="w-full border-collapse text-left">
-          <thead>
-            <tr className="border-b border-foreground/10 bg-foreground/[0.02] text-xs uppercase tracking-widest text-foreground/40">
-              <th className="px-6 py-4 font-medium">Capability</th>
-              <th className="px-6 py-4 text-right font-medium">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {matrix.map(([label, status, note], i) => (
-              <tr
-                key={i}
-                className="border-b border-foreground/10 transition-colors last:border-0 hover:bg-foreground/[0.02]"
-              >
-                <td className="px-6 py-5 text-sm text-foreground/85 sm:text-base">
-                  {label}
-                </td>
-                <td className="px-6 py-5">
-                  <div className="flex items-center justify-end gap-2">
-                    {status === "done" ? (
-                      <>
-                        <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
-                        <span className="text-sm text-emerald-400">
-                          Implemented
-                        </span>
-                        {note && (
-                          <span className="ml-2 rounded-md border border-foreground/10 bg-foreground/5 px-2 py-0.5 font-mono text-[11px] text-foreground/60">
-                            {note}
-                          </span>
-                        )}
-                        <CheckCircle2 className="ml-1 hidden h-4 w-4 text-emerald-400 sm:block" />
-                      </>
-                    ) : (
-                      <>
-                        <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgb(251,191,36,0.7)]" />
-                        <span className="text-sm text-amber-400">Roadmap</span>
-                        <Circle className="ml-1 hidden h-4 w-4 text-amber-400 sm:block" />
-                      </>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </motion.div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <motion.div {...fadeUp} className="glass rounded-2xl p-8">
+          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+            <Cpu className="h-5 w-5" />
+          </div>
+          <div className="text-[11px] uppercase tracking-widest text-emerald-400/90">
+            AI does what scales
+          </div>
+          <ul className="mt-3 space-y-2 text-foreground/85">
+            <li>· Observes sites continuously without fatigue</li>
+            <li>· Estimates quantities against the BOQ</li>
+            <li>· Enforces mandates on every action, deterministically</li>
+          </ul>
+        </motion.div>
+        <motion.div {...fadeUp} className="glass rounded-2xl p-8">
+          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400">
+            <Fingerprint className="h-5 w-5" />
+          </div>
+          <div className="text-[11px] uppercase tracking-widest text-indigo-400/90">
+            Humans do what carries legal weight
+          </div>
+          <ul className="mt-3 space-y-2 text-foreground/85">
+            <li>· Attest that the measurement matches reality</li>
+            <li>· Hold and exercise scoped mandates</li>
+            <li>· Approve above thresholds, accountable in the chain</li>
+          </ul>
+        </motion.div>
+      </div>
+      <div className="mt-6 text-center font-mono text-sm text-foreground/50">
+        Neither side moves money alone. Dual-key, enforced in code at every
+        layer.
+      </div>
     </section>
   );
 }
 
-function CTA() {
+/* ============================ VALUE ============================ */
+
+const valueCards = [
+  {
+    who: "Contractor",
+    hi: "97% take-home with day-1 liquidity",
+    lo: "vs ~91% today after informal 18–24% p.a. bridge finance",
+    color: "emerald",
+  },
+  {
+    who: "Bank",
+    hi: "~11% p.a. on holdback-buffered paper",
+    lo: "near-sovereign risk profile, 40% principal buffer, itemised deductions",
+    color: "indigo",
+  },
+  {
+    who: "Platform",
+    hi: "35 bps + SaaS + the reliability data layer",
+    lo: "the flywheel: clean settlement history raises advance rates 50→85%; competitors can\u2019t replicate the data",
+    color: "amber",
+  },
+];
+
+function Value() {
   return (
-    <section id="deploy" className="mx-auto max-w-7xl px-4 pb-28">
+    <section className="mx-auto max-w-7xl px-4 py-24">
+      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+        <div className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
+          Value
+        </div>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          Every side of the table is better off. That&apos;s why it moves.
+        </h2>
+      </motion.div>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {valueCards.map((v, i) => (
+          <motion.div
+            key={v.who}
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+            className="glass rounded-2xl p-7"
+          >
+            <div
+              className={`text-[11px] uppercase tracking-widest ${
+                v.color === "emerald"
+                  ? "text-emerald-400/90"
+                  : v.color === "indigo"
+                    ? "text-indigo-400/90"
+                    : "text-amber-400/90"
+              }`}
+            >
+              {v.who}
+            </div>
+            <div className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
+              {v.hi}
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">{v.lo}</p>
+          </motion.div>
+        ))}
+      </div>
+
       <motion.div
         {...fadeUp}
-        className="glass relative overflow-hidden rounded-3xl p-10 text-center sm:p-16"
+        className="mt-8 glass rounded-2xl p-7 sm:p-8"
       >
-        <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[600px] -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[600px] -translate-x-1/2 rounded-full bg-indigo-500/15 blur-3xl" />
-        <h3 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          Ready to deploy the dual-key rail?
-        </h3>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Spin up a signed sandbox in under 90 seconds. No credit card, no seat
-          minimums.
-        </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all btn-press hover:scale-105"
-          >
-            Deploy Demo <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 rounded-md border border-foreground/20 px-6 py-3 text-foreground transition-colors hover:bg-foreground/10"
-          >
-            Talk to Engineering
-          </a>
+        <div className="flex items-start gap-4">
+          <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+            <BadgeCheck className="h-5 w-5" />
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-widest text-emerald-400/90">
+              The flywheel
+            </div>
+            <p className="mt-2 max-w-3xl text-foreground/85">
+              Every settled cycle mints proprietary data on payer and payee
+              behavior. That data steps the advance rate for the next cycle.
+              Competitors can copy the UI in a weekend; they cannot copy five
+              years of on-chain settlement history.
+            </p>
+          </div>
         </div>
       </motion.div>
     </section>
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-foreground/10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-foreground/50 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
-          <span>ReEnvision 5.0</span>
-          <span className="mx-2 text-foreground/20">|</span>
-          <span>Built for the physical and digital frontiers.</span>
-        </div>
-        <div className="font-mono text-xs text-foreground/30">
-          © {new Date().getFullYear()} · v5.0.0
-        </div>
-      </div>
-    </footer>
-  );
-}
+/* ============================ LIVE DEMO ============================ */
 
-function LiveDemos() {
+function LiveDemo() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20">
+    <section id="try" className="mx-auto max-w-7xl px-4 py-20">
       <motion.div {...fadeUp} className="mb-10 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-emerald-400/80">
-          Live · try it
+        <div className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
+          Live · Layer 1 · try it
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
           Sign a real work item. Watch the payout unlock.
@@ -587,20 +862,21 @@ function LiveDemos() {
   );
 }
 
-function SuretySection() {
+function MandateSection() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20">
       <motion.div {...fadeUp} className="mb-10 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-indigo-400/80">
-          Surety · policy playground
+        <div className="text-xs uppercase tracking-[0.2em] text-indigo-400/80">
+          Live · Layer 2 · Approver mandate playground
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          Give the agent hands. Keep the permission slip.
+          Change the mandate. Watch what an engineer can and can&apos;t
+          certify.
         </h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Adjust the spend cap and domain allowlist, then simulate an agent
-          calling <span className="font-mono text-foreground/70">payments.charge</span>.
-          The MCP proxy checks every call against the signed certificate.
+          Move the value cap, edit the category allowlist, change the state
+          circle, or simulate a transfer. Every attempt — allowed, escrowed,
+          or blocked — becomes a signed event on the chain.
         </p>
       </motion.div>
       <motion.div {...fadeUp}>
@@ -610,71 +886,110 @@ function SuretySection() {
   );
 }
 
-function Verticals() {
+/* ============================ VALIDATION ============================ */
+
+const validation = [
+  {
+    tag: "Working code",
+    title: "47 unit tests, including Ed25519 vs RFC 8032 vectors",
+    body: "Signature engine verified against the RFC test vectors. Financial waterfall and mandate policy have their own test suites (22 + 18).",
+  },
+  {
+    tag: "Live demos",
+    title: "Two interactive demos on this page",
+    body: "Dual-key certification flow and the mandate playground — both driven by the same policy code, no mocks.",
+  },
+  {
+    tag: "Precedent stack",
+    title: "Everything Realium relies on already exists in India",
+    body: "UPI (real-time rails), GST e-invoicing (bank-grade digital instruments), TReDS (bill-discounting exchanges), CPWD e-MB (~₹20,000 Cr/yr digital), Drone Rules 2021 (BVLOS site capture).",
+  },
+  {
+    tag: "Demand proof",
+    title: "Powerplay does $10M ARR financing the private side",
+    body: "A pure-private-sector analogue is already at scale. The public-works side is 30x larger and has no incumbent settlement rail. [5]",
+  },
+];
+
+function Validation() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20">
-      <motion.div {...fadeUp} className="mb-10 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-emerald-400/80">
-          One primitive · applied everywhere
+    <section id="validation" className="mx-auto max-w-7xl px-4 py-24">
+      <motion.div {...fadeUp} className="mb-12 max-w-3xl">
+        <div className="text-xs uppercase tracking-[0.2em] text-emerald-400/80">
+          Validation
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          Verification is the last analog industry.
+          Not a deck. A working system with precedent.
         </h2>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
-          Public works is the beachhead. Insurance, agri, trade, and carbon
-          reuse the same certificate primitive — trust and calibration compound
-          across verticals.
-        </p>
       </motion.div>
-      <motion.div {...fadeUp}>
-        <VerticalsSwitcher />
-      </motion.div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {validation.map((v, i) => (
+          <motion.div
+            key={v.tag}
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: i * 0.06 }}
+            className="glass rounded-2xl p-6"
+          >
+            <div className="text-[11px] uppercase tracking-widest text-emerald-400/80">
+              {v.tag}
+            </div>
+            <div className="mt-2 text-lg font-semibold text-foreground">
+              {v.title}
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground">{v.body}</p>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }
 
+/* ============================ ROADMAP ============================ */
+
 const roadmap = [
   {
     phase: "Prototype",
-    when: "Weeks",
+    when: "Done",
     color: "emerald",
     items: [
-      "Field capture + AI-prefilled Measurement Book with dual-key certification on a real PWD work item",
-      "Certificate format + MCP proxy demo: an agent tries to overspend and is stopped by the signed limit",
-      "Map view of certified works across a division",
+      "Ed25519 dual-key certificate engine · 47 tests pass · RFC 8032 vectors",
+      "60/40 settlement waterfall + reliability curve · 22 tests",
+      "Approver mandate policy engine · 18 tests · demoed on this page",
+      "SQLite persistence, tamper-evident hash-chained ledger",
     ],
   },
   {
     phase: "Pilot",
-    when: "3–6 months",
+    when: "6 months",
     color: "indigo",
     items: [
-      "One state PWD division · works ₹15L to ₹5Cr · measurement-to-payment tracked 90 → 15 days",
-      "Three Surety design-partner teams running the proxy in production",
-      "Tamper-evident audit log in daily use across both stacks",
+      "One state PWD division · works ₹15L to ₹5Cr",
+      "Target: measurement-to-payment 90 → 15 days",
+      "Bank partnership discounting certified receivables",
+      "Payer-score published to participating divisions",
     ],
   },
   {
     phase: "Scale",
     when: "12+ months",
-    color: "white",
+    color: "amber",
     items: [
-      "Bank partnership discounting certified receivables",
-      "Second GroundTruth vertical (insurance claims) pilot",
-      "Published open attestation standard · first Surety underwriting partnership",
+      "Multi-state expansion behind published attestation standard",
+      "Second vertical (insurance claims) using the same certificate primitive",
+      "Reliability data layer opened to consortium banks",
     ],
   },
 ];
 
 function Roadmap() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20">
+    <section className="mx-auto max-w-7xl px-4 py-24">
       <motion.div {...fadeUp} className="mb-12 max-w-3xl">
-        <div className="text-sm uppercase tracking-[0.2em] text-foreground/60">
+        <div className="text-xs uppercase tracking-[0.2em] text-foreground/60">
           Roadmap
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          The UPI playbook, for attested reality.
+          Prototype done. Pilot next. Scale on a published standard.
         </h2>
       </motion.div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -689,7 +1004,15 @@ function Roadmap() {
               <div className="font-mono text-[11px] uppercase tracking-widest text-foreground/40">
                 Phase {i + 1}
               </div>
-              <div className="rounded-full border border-foreground/10 bg-foreground/5 px-2 py-0.5 font-mono text-[10px] text-foreground/60">
+              <div
+                className={`rounded-full border px-2 py-0.5 font-mono text-[10px] ${
+                  p.color === "emerald"
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+                    : p.color === "indigo"
+                      ? "border-indigo-500/30 bg-indigo-500/10 text-indigo-400"
+                      : "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                }`}
+              >
                 {p.when}
               </div>
             </div>
@@ -699,13 +1022,13 @@ function Roadmap() {
             <ul className="mt-5 space-y-3">
               {p.items.map((item, j) => (
                 <li key={j} className="flex gap-3 text-sm text-foreground/75">
-                  <span
-                    className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                  <Clock
+                    className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${
                       p.color === "emerald"
-                        ? "bg-emerald-400 shadow-[0_0_8px_rgb(16,185,129,0.7)]"
+                        ? "text-emerald-400"
                         : p.color === "indigo"
-                          ? "bg-indigo-400 shadow-[0_0_8px_rgb(99,102,241,0.7)]"
-                          : "bg-foreground"
+                          ? "text-indigo-400"
+                          : "text-amber-400"
                     }`}
                   />
                   <span className="leading-relaxed">{item}</span>
@@ -719,22 +1042,153 @@ function Roadmap() {
   );
 }
 
+/* ============================ SOURCES ============================ */
+
+const sources = [
+  {
+    n: 1,
+    label: "Maharashtra ₹96,000 Cr contractor dues (2025 strike coverage)",
+    href: "https://whalesbook.com/news/maharashtra-contractors-strike",
+  },
+  {
+    n: 2,
+    label:
+      "National delayed-payments range: NITI Aayog member estimate (₹1 lakh Cr) to industry analyses (up to ₹3 lakh Cr)",
+    href: "https://www.niti.gov.in/",
+  },
+  {
+    n: 3,
+    label:
+      "Construction arbitration duration & pendency — Global Arbitration Review, India construction chapter",
+    href: "https://globalarbitrationreview.com/insight/know-how/construction-arbitration/report/india",
+  },
+  {
+    n: 4,
+    label:
+      "CPWD e-Measurement Book — PIB release ID 1786064; Business Standard coverage",
+    href: "https://pib.gov.in/PressReleasePage.aspx?PRID=1786064",
+  },
+  {
+    n: 5,
+    label: "Powerplay $10M ARR — EPC World",
+    href: "https://www.epcworld.in/",
+  },
+];
+
+function Sources() {
+  return (
+    <section id="sources" className="mx-auto max-w-7xl px-4 py-20">
+      <motion.div {...fadeUp} className="mb-8 max-w-3xl">
+        <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-foreground/60">
+          <BookOpen className="h-3.5 w-3.5" /> Sources
+        </div>
+        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          Every number above traces back to a public source.
+        </h2>
+      </motion.div>
+      <ol className="glass space-y-3 rounded-2xl p-6 text-sm text-foreground/75">
+        {sources.map((s) => (
+          <li key={s.n} className="flex gap-3">
+            <span className="w-6 shrink-0 font-mono text-foreground/40">
+              [{s.n}]
+            </span>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-emerald-400 hover:underline"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-4 max-w-3xl text-xs text-foreground/50">
+        Disclaimer: worked-example figures on this page are illustrative.
+        Financing assumptions — 11% p.a. bank yield, 0.35% platform fee, and
+        the 50→85% reliability advance curve — are stated as assumptions, not
+        committed terms.
+      </p>
+    </section>
+  );
+}
+
+/* ============================ CTA + FOOTER ============================ */
+
+function CTA() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 pb-24">
+      <motion.div
+        {...fadeUp}
+        className="glass relative overflow-hidden rounded-3xl p-10 text-center sm:p-16"
+      >
+        <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[600px] -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[600px] -translate-x-1/2 rounded-full bg-indigo-500/15 blur-3xl" />
+        <h3 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          One division. One quarter. 90 days to 15.
+        </h3>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+          We&apos;re looking for one PWD division and one bank partner to run
+          the first live cycle. The code is written; the receivables are
+          waiting.
+        </p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a
+            href="#try"
+            className="btn-press inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 font-semibold text-background transition-all hover:scale-105"
+          >
+            Try the live demo <ArrowRight className="h-4 w-4" />
+          </a>
+          <a
+            href="#sources"
+            className="btn-press inline-flex items-center gap-2 rounded-md border border-foreground/20 px-6 py-3 text-foreground transition-colors hover:bg-foreground/10"
+          >
+            Read the sources
+          </a>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-foreground/10">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-foreground/50 sm:flex-row">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
+          <span className="font-semibold text-foreground/80">Realium</span>
+          <span className="mx-2 text-foreground/20">|</span>
+          <span>Built for ReEnvision 5.0 · Human-AI Synergy · XLRI</span>
+        </div>
+        <div className="font-mono text-xs text-foreground/30">
+          © {new Date().getFullYear()}
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ============================ PAGE ============================ */
+
 function LandingPage() {
   return (
     <main className="relative min-h-screen bg-background text-foreground">
       <Nav />
       <Hero />
-      <ProblemScale />
-      <Bento />
-      <LiveDemos />
-      <SuretySection />
-      <Verticals />
-      <FeatureBlocks />
+      <Problem />
+      <Architecture />
+      <MoneyFlow />
+      <RedTeam />
+      <Synergy />
+      <Value />
+      <LiveDemo />
+      <MandateSection />
+      <Validation />
       <Roadmap />
-      <Matrix />
+      <Sources />
       <CTA />
       <Footer />
     </main>
   );
 }
-
