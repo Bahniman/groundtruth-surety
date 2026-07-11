@@ -736,22 +736,40 @@ function MoneyFlow() {
             <div className="mb-3 text-xs uppercase tracking-widest text-indigo-400">
               Worked example · invoice #1863900
             </div>
-            <dl className="space-y-2 font-mono text-sm">
-              {[
-                ["Certified invoice", "₹18,63,900"],
-                ["T+1 advance (60%)", "₹11,18,340"],
-                ["Holdback pool (40%)", "₹7,45,560"],
-                ["Discount to bank (11% p.a., 148d)", "₹49,880"],
-                ["Platform fee (35 bps)", "₹6,524"],
-                ["Contractor take vs. status quo", "97% vs 91%"],
-                ["Days to first cash", "1 vs 148"],
-              ].map(([k, v]) => (
+            <dl className="space-y-1.5 font-mono text-sm">
+              {(
+                [
+                  ["Certified invoice", "₹18,63,900", false],
+                  ["T+1 advance (60%)", "₹11,18,340", false],
+                  ["Holdback pool (40%)", "₹7,45,560", false],
+                  ["Discount to bank (11% p.a., 148d)", "₹49,880", false],
+                  ["Platform fee (35 bps)", "₹6,524", false],
+                  ["Contractor take vs. status quo", "97% vs 91%", true],
+                  ["Days to first cash", "1 vs 148", true],
+                ] as const
+              ).map(([k, v, hi]) => (
                 <div
                   key={k}
-                  className="flex items-center justify-between border-b border-foreground/5 pb-1.5 last:border-0"
+                  className={`flex items-center justify-between gap-3 rounded-md border-b border-foreground/5 px-2 pb-1.5 pt-1 last:border-0 ${
+                    hi
+                      ? "border-b-0 border border-emerald-500/25 bg-emerald-500/[0.06] shadow-[inset_0_0_0_1px_rgb(16,185,129,0.05)]"
+                      : ""
+                  }`}
                 >
-                  <dt className="text-foreground/50">{k}</dt>
-                  <dd className="text-foreground/90">{v}</dd>
+                  <dt
+                    className={hi ? "text-emerald-300/90" : "text-foreground/50"}
+                  >
+                    {k}
+                  </dt>
+                  <dd
+                    className={
+                      hi
+                        ? "text-base font-semibold text-emerald-400 sm:text-lg"
+                        : "text-foreground/90"
+                    }
+                  >
+                    {v}
+                  </dd>
                 </div>
               ))}
             </dl>
