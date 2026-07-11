@@ -461,45 +461,58 @@ function Architecture() {
         </p>
       </motion.div>
 
-      {/* horizontal chain diagram */}
-      <div className="relative mb-14 hidden lg:block">
-        <div className="pointer-events-none absolute left-[8%] right-[8%] top-[52px] h-px bg-gradient-to-r from-emerald-500/50 via-indigo-500/50 to-amber-500/50" />
-        <div className="relative flex items-stretch gap-4">
-          {layers.map((l, i) => (
-            <div key={l.key} className="flex flex-1 items-center gap-3">
-              <div
-                className={`flex-1 rounded-xl border p-4 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
-                  l.color === "emerald"
-                    ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
-                    : l.color === "indigo"
-                      ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
-                      : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] text-foreground/40">
-                    {l.n}
-                  </span>
-                  <span className="text-sm font-semibold text-foreground">
-                    {l.tag}
-                  </span>
-                </div>
-                <div className="mt-1 text-xs text-foreground/60">
-                  {l.key === "evidence"
-                    ? "site → certified e-invoice"
-                    : l.key === "authority"
-                      ? "signed mandate → signed action"
-                      : "instrument → advance → settle"}
-                </div>
+      {/* horizontal chain diagram — desktop */}
+      <div className="mb-14 hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-0">
+        {layers.map((l, i) => (
+          <Fragment key={l.key}>
+            <div
+              className={`flex h-full min-h-[104px] flex-col justify-center rounded-xl border p-5 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+                l.color === "emerald"
+                  ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
+                  : l.color === "indigo"
+                    ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
+                    : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] text-foreground/40">
+                  {l.n}
+                </span>
+                <span className="text-sm font-semibold text-foreground">
+                  {l.tag}
+                </span>
               </div>
-              {i < layers.length - 1 && (
-                <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
-                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
-                </div>
-              )}
+              <div className="mt-1.5 text-xs text-foreground/60">
+                {l.key === "evidence"
+                  ? "site → certified e-invoice"
+                  : l.key === "authority"
+                    ? "signed mandate → signed action"
+                    : "instrument → advance → settle"}
+              </div>
             </div>
-          ))}
-        </div>
+            {i < layers.length - 1 && (
+              <div className="flex items-center self-center px-2">
+                <span
+                  className={`h-px w-6 bg-gradient-to-r ${
+                    i === 0
+                      ? "from-emerald-500/60 to-indigo-500/60"
+                      : "from-indigo-500/60 to-amber-500/60"
+                  }`}
+                />
+                <span className="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
+                </span>
+                <span
+                  className={`h-px w-6 bg-gradient-to-r ${
+                    i === 0
+                      ? "from-emerald-500/60 to-indigo-500/60"
+                      : "from-indigo-500/60 to-amber-500/60"
+                  }`}
+                />
+              </div>
+            )}
+          </Fragment>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -512,64 +525,89 @@ function Architecture() {
                 ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/10"
                 : "text-amber-400 border-amber-500/30 bg-amber-500/10";
           return (
-            <motion.div
-              key={l.key}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7 transition-all hover:-translate-y-0.5 hover:border-foreground/20"
-            >
-              <div className="flex items-center justify-between">
-                <div
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent}`}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="font-mono text-xs text-foreground/40">
-                  Layer {l.n}
-                </div>
-              </div>
-              <div
-                className={`mt-5 text-[11px] uppercase tracking-widest ${
-                  l.color === "emerald"
-                    ? "text-emerald-400/90"
-                    : l.color === "indigo"
-                      ? "text-indigo-400/90"
-                      : "text-amber-400/90"
-                }`}
+            <Fragment key={l.key}>
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+                className="glass relative flex h-full flex-col overflow-hidden rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:border-foreground/20 sm:p-7"
               >
-                {l.tag}
-              </div>
-              <h3 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
-                {l.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {l.body}
-              </p>
-              <ul className="mt-5 space-y-2 border-t border-foreground/10 pt-5">
-                {l.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex gap-2.5 text-sm text-foreground/75"
+                <div className="flex items-center justify-between">
+                  <div
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent}`}
                   >
-                    <span
-                      className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
-                        l.color === "emerald"
-                          ? "bg-emerald-400"
-                          : l.color === "indigo"
-                            ? "bg-indigo-400"
-                            : "bg-amber-400"
-                      }`}
-                    />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              {l.footnote && (
-                <div className="mt-5 rounded-md border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/50">
-                  {l.footnote}
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="font-mono text-xs text-foreground/40">
+                    Layer {l.n}
+                  </div>
+                </div>
+                <div
+                  className={`mt-5 text-[11px] uppercase tracking-widest ${
+                    l.color === "emerald"
+                      ? "text-emerald-400/90"
+                      : l.color === "indigo"
+                        ? "text-indigo-400/90"
+                        : "text-amber-400/90"
+                  }`}
+                >
+                  {l.tag}
+                </div>
+                <h3 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
+                  {l.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {l.body}
+                </p>
+                <ul className="mt-5 space-y-2 border-t border-foreground/10 pt-5">
+                  {l.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="flex gap-2.5 text-sm text-foreground/75"
+                    >
+                      <span
+                        className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                          l.color === "emerald"
+                            ? "bg-emerald-400"
+                            : l.color === "indigo"
+                              ? "bg-indigo-400"
+                              : "bg-amber-400"
+                        }`}
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                {l.footnote && (
+                  <div className="mt-5 rounded-md border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/50">
+                    {l.footnote}
+                  </div>
+                )}
+              </motion.div>
+              {i < layers.length - 1 && (
+                <div
+                  aria-hidden
+                  className="flex flex-col items-center justify-center gap-1 lg:hidden"
+                >
+                  <span
+                    className={`h-6 w-px bg-gradient-to-b ${
+                      i === 0
+                        ? "from-emerald-500/60 to-indigo-500/60"
+                        : "from-indigo-500/60 to-amber-500/60"
+                    }`}
+                  />
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                    <ArrowRight className="h-3 w-3 rotate-90 text-foreground/60" />
+                  </span>
+                  <span
+                    className={`h-6 w-px bg-gradient-to-b ${
+                      i === 0
+                        ? "from-emerald-500/60 to-indigo-500/60"
+                        : "from-indigo-500/60 to-amber-500/60"
+                    }`}
+                  />
                 </div>
               )}
-            </motion.div>
+            </Fragment>
           );
         })}
       </div>
