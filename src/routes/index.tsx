@@ -425,7 +425,7 @@ function Architecture() {
               key={l.key}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7"
+              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7 transition-all hover:-translate-y-0.5 hover:border-foreground/20"
             >
               <div className="flex items-center justify-between">
                 <div
