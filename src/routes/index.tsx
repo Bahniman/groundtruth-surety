@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Sparkles,
@@ -50,16 +51,88 @@ const fadeUp = {
   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
 };
 
+/* ============================ HOOKS / HELPERS ============================ */
+
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? "");
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive((e.target as HTMLElement).id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, [ids]);
+  return active;
+}
+
+function useCountUp(target: number, duration = 1400) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setVal(target * eased);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.4 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, duration]);
+  return { val, ref };
+}
+
+function CountUpStat({ text }: { text: string }) {
+  const match = text.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)(.*)$/);
+  if (!match) return <>{text}</>;
+  const [, prefix, num, suffix] = match;
+  const target = parseFloat(num.replace(/,/g, ""));
+  const decimals = num.includes(".") ? (num.split(".")[1]?.length ?? 0) : 0;
+  const { val, ref } = useCountUp(target);
+  const shown =
+    decimals > 0
+      ? val.toFixed(decimals)
+      : Math.round(val).toLocaleString("en-IN");
+  return (
+    <span ref={ref}>
+      {prefix}
+      {shown}
+      {suffix}
+    </span>
+  );
+}
+
 /* ============================ NAV ============================ */
 
 function Nav() {
   const links = [
-    { label: "Problem", href: "#problem" },
-    { label: "Architecture", href: "#architecture" },
-    { label: "Money flow", href: "#flow" },
-    { label: "Red team", href: "#redteam" },
-    { label: "Validation", href: "#validation" },
+    { label: "Problem", id: "problem" },
+    { label: "Platform", id: "architecture" },
+    { label: "Money flow", id: "flow" },
+    { label: "The hard question", id: "redteam" },
+    { label: "Validation", id: "validation" },
   ];
+  const active = useActiveSection(links.map((l) => l.id));
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -83,16 +156,34 @@ function Nav() {
               Realium
             </span>
           </a>
-          <nav className="hidden items-center gap-6 md:flex">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-foreground/60 transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            ))}
+          <nav className="hidden items-center gap-1 md:flex">
+            {links.map((l) => {
+              const isActive = active === l.id;
+              return (
+                <a
+                  key={l.id}
+                  href={`#${l.id}`}
+                  className={`relative rounded-md px-3 py-1.5 text-sm transition-colors ${
+                    isActive
+                      ? "text-foreground"
+                      : "text-foreground/55 hover:text-foreground"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 -z-10 rounded-md bg-foreground/8 ring-1 ring-inset ring-foreground/10"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  {l.label}
+                </a>
+              );
+            })}
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -137,8 +228,8 @@ function Hero() {
           transition={{ ...fadeUp.transition, delay: 0.04 }}
           className="mx-auto mt-3 max-w-3xl text-[11px] leading-relaxed text-muted-foreground sm:text-xs"
         >
-          Presented to a panel of CIOs / CTOs from Barclays, Google, Safexpress,
-          Jubilant Bhartia, RPG Group and others.
+          Presented to a panel of senior technology leaders from Barclays,
+          Google, Safexpress, Jubilant Bhartia Group, RPG Group and others.
         </motion.div>
 
         <motion.div
@@ -253,8 +344,8 @@ function Problem() {
             transition={{ ...fadeUp.transition, delay: i * 0.06 }}
             className="glass rounded-2xl p-6"
           >
-            <div className="text-3xl font-semibold tracking-tight text-foreground">
-              {c.stat}
+            <div className="text-3xl font-semibold tracking-tight text-foreground tabular-nums sm:text-4xl">
+              <CountUpStat text={c.stat} />
             </div>
             <div className="mt-1 text-[11px] uppercase tracking-widest text-foreground/40">
               {c.label} <span className="text-foreground/25">[{c.src}]</span>
@@ -370,45 +461,58 @@ function Architecture() {
         </p>
       </motion.div>
 
-      {/* horizontal chain diagram */}
-      <div className="relative mb-14 hidden lg:block">
-        <div className="pointer-events-none absolute left-[8%] right-[8%] top-[52px] h-px bg-gradient-to-r from-emerald-500/50 via-indigo-500/50 to-amber-500/50" />
-        <div className="relative flex items-stretch gap-4">
-          {layers.map((l, i) => (
-            <div key={l.key} className="flex flex-1 items-center gap-3">
-              <div
-                className={`flex-1 rounded-xl border p-4 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
-                  l.color === "emerald"
-                    ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
-                    : l.color === "indigo"
-                      ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
-                      : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] text-foreground/40">
-                    {l.n}
-                  </span>
-                  <span className="text-sm font-semibold text-foreground">
-                    {l.tag}
-                  </span>
-                </div>
-                <div className="mt-1 text-xs text-foreground/60">
-                  {l.key === "evidence"
-                    ? "site → certified e-invoice"
-                    : l.key === "authority"
-                      ? "signed mandate → signed action"
-                      : "instrument → advance → settle"}
-                </div>
+      {/* horizontal chain diagram — desktop */}
+      <div className="mb-14 hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-0">
+        {layers.map((l, i) => (
+          <Fragment key={l.key}>
+            <div
+              className={`flex h-full min-h-[104px] flex-col justify-center rounded-xl border p-5 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+                l.color === "emerald"
+                  ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
+                  : l.color === "indigo"
+                    ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
+                    : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] text-foreground/40">
+                  {l.n}
+                </span>
+                <span className="text-sm font-semibold text-foreground">
+                  {l.tag}
+                </span>
               </div>
-              {i < layers.length - 1 && (
-                <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
-                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
-                </div>
-              )}
+              <div className="mt-1.5 text-xs text-foreground/60">
+                {l.key === "evidence"
+                  ? "site → certified e-invoice"
+                  : l.key === "authority"
+                    ? "signed mandate → signed action"
+                    : "instrument → advance → settle"}
+              </div>
             </div>
-          ))}
-        </div>
+            {i < layers.length - 1 && (
+              <div className="flex items-center self-center px-2">
+                <span
+                  className={`h-px w-6 bg-gradient-to-r ${
+                    i === 0
+                      ? "from-emerald-500/60 to-indigo-500/60"
+                      : "from-indigo-500/60 to-amber-500/60"
+                  }`}
+                />
+                <span className="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
+                </span>
+                <span
+                  className={`h-px w-6 bg-gradient-to-r ${
+                    i === 0
+                      ? "from-emerald-500/60 to-indigo-500/60"
+                      : "from-indigo-500/60 to-amber-500/60"
+                  }`}
+                />
+              </div>
+            )}
+          </Fragment>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -421,64 +525,89 @@ function Architecture() {
                 ? "text-indigo-400 border-indigo-500/30 bg-indigo-500/10"
                 : "text-amber-400 border-amber-500/30 bg-amber-500/10";
           return (
-            <motion.div
-              key={l.key}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7 transition-all hover:-translate-y-0.5 hover:border-foreground/20"
-            >
-              <div className="flex items-center justify-between">
-                <div
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent}`}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="font-mono text-xs text-foreground/40">
-                  Layer {l.n}
-                </div>
-              </div>
-              <div
-                className={`mt-5 text-[11px] uppercase tracking-widest ${
-                  l.color === "emerald"
-                    ? "text-emerald-400/90"
-                    : l.color === "indigo"
-                      ? "text-indigo-400/90"
-                      : "text-amber-400/90"
-                }`}
+            <Fragment key={l.key}>
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+                className="glass relative flex h-full flex-col overflow-hidden rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:border-foreground/20 sm:p-7"
               >
-                {l.tag}
-              </div>
-              <h3 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
-                {l.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {l.body}
-              </p>
-              <ul className="mt-5 space-y-2 border-t border-foreground/10 pt-5">
-                {l.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex gap-2.5 text-sm text-foreground/75"
+                <div className="flex items-center justify-between">
+                  <div
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent}`}
                   >
-                    <span
-                      className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
-                        l.color === "emerald"
-                          ? "bg-emerald-400"
-                          : l.color === "indigo"
-                            ? "bg-indigo-400"
-                            : "bg-amber-400"
-                      }`}
-                    />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              {l.footnote && (
-                <div className="mt-5 rounded-md border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/50">
-                  {l.footnote}
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="font-mono text-xs text-foreground/40">
+                    Layer {l.n}
+                  </div>
+                </div>
+                <div
+                  className={`mt-5 text-[11px] uppercase tracking-widest ${
+                    l.color === "emerald"
+                      ? "text-emerald-400/90"
+                      : l.color === "indigo"
+                        ? "text-indigo-400/90"
+                        : "text-amber-400/90"
+                  }`}
+                >
+                  {l.tag}
+                </div>
+                <h3 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
+                  {l.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {l.body}
+                </p>
+                <ul className="mt-5 space-y-2 border-t border-foreground/10 pt-5">
+                  {l.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="flex gap-2.5 text-sm text-foreground/75"
+                    >
+                      <span
+                        className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                          l.color === "emerald"
+                            ? "bg-emerald-400"
+                            : l.color === "indigo"
+                              ? "bg-indigo-400"
+                              : "bg-amber-400"
+                        }`}
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                {l.footnote && (
+                  <div className="mt-5 rounded-md border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/50">
+                    {l.footnote}
+                  </div>
+                )}
+              </motion.div>
+              {i < layers.length - 1 && (
+                <div
+                  aria-hidden
+                  className="flex flex-col items-center justify-center gap-1 lg:hidden"
+                >
+                  <span
+                    className={`h-6 w-px bg-gradient-to-b ${
+                      i === 0
+                        ? "from-emerald-500/60 to-indigo-500/60"
+                        : "from-indigo-500/60 to-amber-500/60"
+                    }`}
+                  />
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                    <ArrowRight className="h-3 w-3 rotate-90 text-foreground/60" />
+                  </span>
+                  <span
+                    className={`h-6 w-px bg-gradient-to-b ${
+                      i === 0
+                        ? "from-emerald-500/60 to-indigo-500/60"
+                        : "from-indigo-500/60 to-amber-500/60"
+                    }`}
+                  />
                 </div>
               )}
-            </motion.div>
+            </Fragment>
           );
         })}
       </div>
@@ -607,22 +736,40 @@ function MoneyFlow() {
             <div className="mb-3 text-xs uppercase tracking-widest text-indigo-400">
               Worked example · invoice #1863900
             </div>
-            <dl className="space-y-2 font-mono text-sm">
-              {[
-                ["Certified invoice", "₹18,63,900"],
-                ["T+1 advance (60%)", "₹11,18,340"],
-                ["Holdback pool (40%)", "₹7,45,560"],
-                ["Discount to bank (11% p.a., 148d)", "₹49,880"],
-                ["Platform fee (35 bps)", "₹6,524"],
-                ["Contractor take vs. status quo", "97% vs 91%"],
-                ["Days to first cash", "1 vs 148"],
-              ].map(([k, v]) => (
+            <dl className="space-y-1.5 font-mono text-sm">
+              {(
+                [
+                  ["Certified invoice", "₹18,63,900", false],
+                  ["T+1 advance (60%)", "₹11,18,340", false],
+                  ["Holdback pool (40%)", "₹7,45,560", false],
+                  ["Discount to bank (11% p.a., 148d)", "₹49,880", false],
+                  ["Platform fee (35 bps)", "₹6,524", false],
+                  ["Contractor take vs. status quo", "97% vs 91%", true],
+                  ["Days to first cash", "1 vs 148", true],
+                ] as const
+              ).map(([k, v, hi]) => (
                 <div
                   key={k}
-                  className="flex items-center justify-between border-b border-foreground/5 pb-1.5 last:border-0"
+                  className={`flex items-center justify-between gap-3 rounded-md border-b border-foreground/5 px-2 pb-1.5 pt-1 last:border-0 ${
+                    hi
+                      ? "border-b-0 border border-emerald-500/25 bg-emerald-500/[0.06] shadow-[inset_0_0_0_1px_rgb(16,185,129,0.05)]"
+                      : ""
+                  }`}
                 >
-                  <dt className="text-foreground/50">{k}</dt>
-                  <dd className="text-foreground/90">{v}</dd>
+                  <dt
+                    className={hi ? "text-emerald-300/90" : "text-foreground/50"}
+                  >
+                    {k}
+                  </dt>
+                  <dd
+                    className={
+                      hi
+                        ? "text-base font-semibold text-emerald-400 sm:text-lg"
+                        : "text-foreground/90"
+                    }
+                  >
+                    {v}
+                  </dd>
                 </div>
               ))}
             </dl>
