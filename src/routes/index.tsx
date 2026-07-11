@@ -3,6 +3,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Sparkles,
   ArrowRight,
+  Trophy,
   Camera,
   Fingerprint,
   Banknote,
@@ -121,11 +122,35 @@ function Hero() {
 
       <div className="mx-auto max-w-7xl px-4 text-center">
         <motion.div {...fadeUp} className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/5 px-4 py-1 text-xs text-foreground/70 backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-foreground/[0.03] to-emerald-500/10 px-4 py-1.5 text-xs text-foreground/80 shadow-[0_0_40px_-10px_rgb(245,158,11,0.35)] backdrop-blur">
+            <Trophy className="h-3.5 w-3.5 text-amber-400" />
+            <span className="font-semibold text-foreground">Top 3</span>
+            <span className="text-foreground/40">·</span>
+            <span>ReEnvision 5.0 — XLRI Digital Transformation Conclave</span>
+            <span className="text-foreground/40">·</span>
+            <span className="text-foreground/60">July 2026</span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.04 }}
+          className="mx-auto mt-3 max-w-3xl text-[11px] leading-relaxed text-muted-foreground sm:text-xs"
+        >
+          Presented to a panel of CIOs / CTOs from Barclays, Google, Safexpress,
+          Jubilant Bhartia, RPG Group and others.
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.08 }}
+          className="mt-6 flex justify-center"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3.5 py-1 text-[11px] text-foreground/60 backdrop-blur">
+            <Sparkles className="h-3 w-3 text-emerald-400" />
             Built for ReEnvision 5.0
             <span className="mx-1 h-1 w-1 rounded-full bg-foreground/30" />
-            Human-AI Synergy · XLRI
+            Human-AI Synergy · XLRI · Group 10
           </div>
         </motion.div>
 
@@ -345,40 +370,45 @@ function Architecture() {
         </p>
       </motion.div>
 
-      {/* horizontal flow diagram */}
-      <div className="mb-12 hidden items-stretch gap-3 lg:flex">
-        {layers.map((l, i) => (
-          <div key={l.key} className="flex flex-1 items-center gap-3">
-            <div
-              className={`flex-1 rounded-xl border p-4 ${
-                l.color === "emerald"
-                  ? "border-emerald-500/30 bg-emerald-500/[0.04]"
-                  : l.color === "indigo"
-                    ? "border-indigo-500/30 bg-indigo-500/[0.04]"
-                    : "border-amber-500/30 bg-amber-500/[0.04]"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] text-foreground/40">
-                  {l.n}
-                </span>
-                <span className="text-sm font-semibold text-foreground">
-                  {l.tag}
-                </span>
+      {/* horizontal chain diagram */}
+      <div className="relative mb-14 hidden lg:block">
+        <div className="pointer-events-none absolute left-[8%] right-[8%] top-[52px] h-px bg-gradient-to-r from-emerald-500/50 via-indigo-500/50 to-amber-500/50" />
+        <div className="relative flex items-stretch gap-4">
+          {layers.map((l, i) => (
+            <div key={l.key} className="flex flex-1 items-center gap-3">
+              <div
+                className={`flex-1 rounded-xl border p-4 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+                  l.color === "emerald"
+                    ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
+                    : l.color === "indigo"
+                      ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
+                      : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[11px] text-foreground/40">
+                    {l.n}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {l.tag}
+                  </span>
+                </div>
+                <div className="mt-1 text-xs text-foreground/60">
+                  {l.key === "evidence"
+                    ? "site → certified e-invoice"
+                    : l.key === "authority"
+                      ? "signed mandate → signed action"
+                      : "instrument → advance → settle"}
+                </div>
               </div>
-              <div className="mt-1 text-xs text-foreground/60">
-                {l.key === "evidence"
-                  ? "site → certified e-invoice"
-                  : l.key === "authority"
-                    ? "signed mandate → signed action"
-                    : "instrument → advance → settle"}
-              </div>
+              {i < layers.length - 1 && (
+                <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
+                </div>
+              )}
             </div>
-            {i < layers.length - 1 && (
-              <ArrowRight className="h-4 w-4 shrink-0 text-foreground/40" />
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -395,7 +425,7 @@ function Architecture() {
               key={l.key}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7"
+              className="glass relative flex flex-col overflow-hidden rounded-2xl p-7 transition-all hover:-translate-y-0.5 hover:border-foreground/20"
             >
               <div className="flex items-center justify-between">
                 <div
@@ -470,12 +500,12 @@ const flowSteps = [
     body: "SDE reviews on-device, signs with Ed25519 key scoped to work_id PWD-MH-1863900. Certificate hashed into ledger.",
   },
   {
-    day: "T+1",
+    day: "Day 1",
     title: "Bank advance",
     body: "60% of ₹18,63,900 = ₹11,18,340 advanced to contractor at ~11% p.a. Holdback pool funded with 40%.",
   },
   {
-    day: "T+2 → T+90",
+    day: "Day 2 → 90",
     title: "Approval chain runs — visibly",
     body: "Each approver acts under a signed mandate. Every touch is timestamped. No touch, no invisible delay.",
   },
@@ -494,12 +524,12 @@ function MoneyFlow() {
           How money moves
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          From site to bank account — measured in days, not months.
+          From site to bank account.
         </h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          A worked ₹18.6 lakh road-works bill. The traditional path takes 148
-          days. The Realium path advances 60% at T+1 and lets treasury settle
-          at its own pace behind a holdback buffer.
+          A worked ₹18,63,900 road-works bill. Traditional path: 148 days.
+          Realium path: 60% cash on Day 1, treasury settles behind a
+          holdback buffer.
         </p>
       </motion.div>
 
@@ -580,11 +610,11 @@ function MoneyFlow() {
             <dl className="space-y-2 font-mono text-sm">
               {[
                 ["Certified invoice", "₹18,63,900"],
-                ["T+1 advance (Tier 2, 60%)", "₹11,18,340"],
+                ["T+1 advance (60%)", "₹11,18,340"],
                 ["Holdback pool (40%)", "₹7,45,560"],
-                ["Discount to bank (~11% p.a., ~30d)", "≈ ₹10,236"],
+                ["Discount to bank (11% p.a., 148d)", "₹49,880"],
                 ["Platform fee (35 bps)", "₹6,524"],
-                ["Contractor take vs. status quo", "97% vs ~91%"],
+                ["Contractor take vs. status quo", "97% vs 91%"],
                 ["Days to first cash", "1 vs 148"],
               ].map(([k, v]) => (
                 <div
@@ -1154,15 +1184,32 @@ function CTA() {
 function Footer() {
   return (
     <footer className="border-t border-foreground/10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-foreground/50 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
-          <span className="font-semibold text-foreground/80">Realium</span>
-          <span className="mx-2 text-foreground/20">|</span>
-          <span>Built for ReEnvision 5.0 · Human-AI Synergy · XLRI</span>
+      <div className="mx-auto max-w-7xl px-4 py-10">
+        <div className="glass mb-6 flex flex-col items-start gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="text-[11px] uppercase tracking-widest text-emerald-400/80">
+              Team Realium
+            </div>
+            <div className="mt-1 text-sm text-foreground/85">
+              Ananthanarayan · Bahniman · Nandini · Srishti · Uditanshu
+            </div>
+          </div>
+          <div className="font-mono text-[11px] text-foreground/50">
+            PGDM-GM, XLRI Jamshedpur · Built for ReEnvision 5.0 (Group 10)
+          </div>
         </div>
-        <div className="font-mono text-xs text-foreground/30">
-          © {new Date().getFullYear()}
+        <div className="flex flex-col items-center justify-between gap-3 text-sm text-foreground/50 sm:flex-row">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
+            <span className="font-semibold text-foreground/80">Realium</span>
+            <span className="mx-2 text-foreground/20">|</span>
+            <span>
+              Top 3 · ReEnvision 5.0 · XLRI Digital Transformation Conclave · July 2026
+            </span>
+          </div>
+          <div className="font-mono text-xs text-foreground/30">
+            © {new Date().getFullYear()}
+          </div>
         </div>
       </div>
     </footer>
