@@ -370,40 +370,45 @@ function Architecture() {
         </p>
       </motion.div>
 
-      {/* horizontal flow diagram */}
-      <div className="mb-12 hidden items-stretch gap-3 lg:flex">
-        {layers.map((l, i) => (
-          <div key={l.key} className="flex flex-1 items-center gap-3">
-            <div
-              className={`flex-1 rounded-xl border p-4 ${
-                l.color === "emerald"
-                  ? "border-emerald-500/30 bg-emerald-500/[0.04]"
-                  : l.color === "indigo"
-                    ? "border-indigo-500/30 bg-indigo-500/[0.04]"
-                    : "border-amber-500/30 bg-amber-500/[0.04]"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-[11px] text-foreground/40">
-                  {l.n}
-                </span>
-                <span className="text-sm font-semibold text-foreground">
-                  {l.tag}
-                </span>
+      {/* horizontal chain diagram */}
+      <div className="relative mb-14 hidden lg:block">
+        <div className="pointer-events-none absolute left-[8%] right-[8%] top-[52px] h-px bg-gradient-to-r from-emerald-500/50 via-indigo-500/50 to-amber-500/50" />
+        <div className="relative flex items-stretch gap-4">
+          {layers.map((l, i) => (
+            <div key={l.key} className="flex flex-1 items-center gap-3">
+              <div
+                className={`flex-1 rounded-xl border p-4 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+                  l.color === "emerald"
+                    ? "border-emerald-500/40 bg-emerald-500/[0.06] hover:shadow-emerald-500/20"
+                    : l.color === "indigo"
+                      ? "border-indigo-500/40 bg-indigo-500/[0.06] hover:shadow-indigo-500/20"
+                      : "border-amber-500/40 bg-amber-500/[0.06] hover:shadow-amber-500/20"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[11px] text-foreground/40">
+                    {l.n}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {l.tag}
+                  </span>
+                </div>
+                <div className="mt-1 text-xs text-foreground/60">
+                  {l.key === "evidence"
+                    ? "site → certified e-invoice"
+                    : l.key === "authority"
+                      ? "signed mandate → signed action"
+                      : "instrument → advance → settle"}
+                </div>
               </div>
-              <div className="mt-1 text-xs text-foreground/60">
-                {l.key === "evidence"
-                  ? "site → certified e-invoice"
-                  : l.key === "authority"
-                    ? "signed mandate → signed action"
-                    : "instrument → advance → settle"}
-              </div>
+              {i < layers.length - 1 && (
+                <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/15 bg-background shadow-sm">
+                  <ArrowRight className="h-3.5 w-3.5 text-foreground/60" />
+                </div>
+              )}
             </div>
-            {i < layers.length - 1 && (
-              <ArrowRight className="h-4 w-4 shrink-0 text-foreground/40" />
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
