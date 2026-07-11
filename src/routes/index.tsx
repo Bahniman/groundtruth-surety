@@ -344,8 +344,8 @@ function Problem() {
             transition={{ ...fadeUp.transition, delay: i * 0.06 }}
             className="glass rounded-2xl p-6"
           >
-            <div className="text-3xl font-semibold tracking-tight text-foreground">
-              {c.stat}
+            <div className="text-3xl font-semibold tracking-tight text-foreground tabular-nums sm:text-4xl">
+              <CountUpStat text={c.stat} />
             </div>
             <div className="mt-1 text-[11px] uppercase tracking-widest text-foreground/40">
               {c.label} <span className="text-foreground/25">[{c.src}]</span>
