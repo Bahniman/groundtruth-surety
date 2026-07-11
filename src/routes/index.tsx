@@ -51,16 +51,88 @@ const fadeUp = {
   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
 };
 
+/* ============================ HOOKS / HELPERS ============================ */
+
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? "");
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive((e.target as HTMLElement).id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, [ids]);
+  return active;
+}
+
+function useCountUp(target: number, duration = 1400) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setVal(target * eased);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.4 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, duration]);
+  return { val, ref };
+}
+
+function CountUpStat({ text }: { text: string }) {
+  const match = text.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)(.*)$/);
+  if (!match) return <>{text}</>;
+  const [, prefix, num, suffix] = match;
+  const target = parseFloat(num.replace(/,/g, ""));
+  const decimals = num.includes(".") ? (num.split(".")[1]?.length ?? 0) : 0;
+  const { val, ref } = useCountUp(target);
+  const shown =
+    decimals > 0
+      ? val.toFixed(decimals)
+      : Math.round(val).toLocaleString("en-IN");
+  return (
+    <span ref={ref}>
+      {prefix}
+      {shown}
+      {suffix}
+    </span>
+  );
+}
+
 /* ============================ NAV ============================ */
 
 function Nav() {
   const links = [
-    { label: "Problem", href: "#problem" },
-    { label: "Architecture", href: "#architecture" },
-    { label: "Money flow", href: "#flow" },
-    { label: "Red team", href: "#redteam" },
-    { label: "Validation", href: "#validation" },
+    { label: "Problem", id: "problem" },
+    { label: "Platform", id: "architecture" },
+    { label: "Money flow", id: "flow" },
+    { label: "The hard question", id: "redteam" },
+    { label: "Validation", id: "validation" },
   ];
+  const active = useActiveSection(links.map((l) => l.id));
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -84,16 +156,34 @@ function Nav() {
               Realium
             </span>
           </a>
-          <nav className="hidden items-center gap-6 md:flex">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-foreground/60 transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            ))}
+          <nav className="hidden items-center gap-1 md:flex">
+            {links.map((l) => {
+              const isActive = active === l.id;
+              return (
+                <a
+                  key={l.id}
+                  href={`#${l.id}`}
+                  className={`relative rounded-md px-3 py-1.5 text-sm transition-colors ${
+                    isActive
+                      ? "text-foreground"
+                      : "text-foreground/55 hover:text-foreground"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 -z-10 rounded-md bg-foreground/8 ring-1 ring-inset ring-foreground/10"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  {l.label}
+                </a>
+              );
+            })}
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
