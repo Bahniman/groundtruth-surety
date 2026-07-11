@@ -1184,15 +1184,32 @@ function CTA() {
 function Footer() {
   return (
     <footer className="border-t border-foreground/10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-foreground/50 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
-          <span className="font-semibold text-foreground/80">Realium</span>
-          <span className="mx-2 text-foreground/20">|</span>
-          <span>Built for ReEnvision 5.0 · Human-AI Synergy · XLRI</span>
+      <div className="mx-auto max-w-7xl px-4 py-10">
+        <div className="glass mb-6 flex flex-col items-start gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="text-[11px] uppercase tracking-widest text-emerald-400/80">
+              Team Realium
+            </div>
+            <div className="mt-1 text-sm text-foreground/85">
+              Ananthanarayan · Bahniman · Nandini · Srishti · Uditanshu
+            </div>
+          </div>
+          <div className="font-mono text-[11px] text-foreground/50">
+            PGDM-GM, XLRI Jamshedpur · Built for ReEnvision 5.0 (Group 10)
+          </div>
         </div>
-        <div className="font-mono text-xs text-foreground/30">
-          © {new Date().getFullYear()}
+        <div className="flex flex-col items-center justify-between gap-3 text-sm text-foreground/50 sm:flex-row">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgb(16,185,129,0.8)]" />
+            <span className="font-semibold text-foreground/80">Realium</span>
+            <span className="mx-2 text-foreground/20">|</span>
+            <span>
+              Top 3 · ReEnvision 5.0 · XLRI Digital Transformation Conclave · July 2026
+            </span>
+          </div>
+          <div className="font-mono text-xs text-foreground/30">
+            © {new Date().getFullYear()}
+          </div>
         </div>
       </div>
     </footer>
