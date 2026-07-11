@@ -495,12 +495,12 @@ const flowSteps = [
     body: "SDE reviews on-device, signs with Ed25519 key scoped to work_id PWD-MH-1863900. Certificate hashed into ledger.",
   },
   {
-    day: "T+1",
+    day: "Day 1",
     title: "Bank advance",
     body: "60% of ₹18,63,900 = ₹11,18,340 advanced to contractor at ~11% p.a. Holdback pool funded with 40%.",
   },
   {
-    day: "T+2 → T+90",
+    day: "Day 2 → 90",
     title: "Approval chain runs — visibly",
     body: "Each approver acts under a signed mandate. Every touch is timestamped. No touch, no invisible delay.",
   },
