@@ -122,11 +122,35 @@ function Hero() {
 
       <div className="mx-auto max-w-7xl px-4 text-center">
         <motion.div {...fadeUp} className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/5 px-4 py-1 text-xs text-foreground/70 backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-foreground/[0.03] to-emerald-500/10 px-4 py-1.5 text-xs text-foreground/80 shadow-[0_0_40px_-10px_rgb(245,158,11,0.35)] backdrop-blur">
+            <Trophy className="h-3.5 w-3.5 text-amber-400" />
+            <span className="font-semibold text-foreground">Top 3</span>
+            <span className="text-foreground/40">·</span>
+            <span>ReEnvision 5.0 — XLRI Digital Transformation Conclave</span>
+            <span className="text-foreground/40">·</span>
+            <span className="text-foreground/60">July 2026</span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.04 }}
+          className="mx-auto mt-3 max-w-3xl text-[11px] leading-relaxed text-muted-foreground sm:text-xs"
+        >
+          Presented to a panel of CIOs / CTOs from Barclays, Google, Safexpress,
+          Jubilant Bhartia, RPG Group and others.
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.08 }}
+          className="mt-6 flex justify-center"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3.5 py-1 text-[11px] text-foreground/60 backdrop-blur">
+            <Sparkles className="h-3 w-3 text-emerald-400" />
             Built for ReEnvision 5.0
             <span className="mx-1 h-1 w-1 rounded-full bg-foreground/30" />
-            Human-AI Synergy · XLRI
+            Human-AI Synergy · XLRI · Group 10
           </div>
         </motion.div>
 
