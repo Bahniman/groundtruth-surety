@@ -228,8 +228,8 @@ function Hero() {
           transition={{ ...fadeUp.transition, delay: 0.04 }}
           className="mx-auto mt-3 max-w-3xl text-[11px] leading-relaxed text-muted-foreground sm:text-xs"
         >
-          Presented to a panel of CIOs / CTOs from Barclays, Google, Safexpress,
-          Jubilant Bhartia, RPG Group and others.
+          Presented to a panel of senior technology leaders from Barclays,
+          Google, Safexpress, Jubilant Bhartia Group, RPG Group and others.
         </motion.div>
 
         <motion.div
