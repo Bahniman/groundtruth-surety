@@ -519,12 +519,12 @@ function MoneyFlow() {
           How money moves
         </div>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          From site to bank account — measured in days, not months.
+          From site to bank account.
         </h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          A worked ₹18.6 lakh road-works bill. The traditional path takes 148
-          days. The Realium path advances 60% at T+1 and lets treasury settle
-          at its own pace behind a holdback buffer.
+          A worked ₹18,63,900 road-works bill. Traditional path: 148 days.
+          Realium path: 60% cash on Day 1, treasury settles behind a
+          holdback buffer.
         </p>
       </motion.div>
 
