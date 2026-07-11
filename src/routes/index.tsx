@@ -605,11 +605,11 @@ function MoneyFlow() {
             <dl className="space-y-2 font-mono text-sm">
               {[
                 ["Certified invoice", "₹18,63,900"],
-                ["T+1 advance (Tier 2, 60%)", "₹11,18,340"],
+                ["T+1 advance (60%)", "₹11,18,340"],
                 ["Holdback pool (40%)", "₹7,45,560"],
-                ["Discount to bank (~11% p.a., ~30d)", "≈ ₹10,236"],
+                ["Discount to bank (11% p.a., 148d)", "₹49,880"],
                 ["Platform fee (35 bps)", "₹6,524"],
-                ["Contractor take vs. status quo", "97% vs ~91%"],
+                ["Contractor take vs. status quo", "97% vs 91%"],
                 ["Days to first cash", "1 vs 148"],
               ].map(([k, v]) => (
                 <div
